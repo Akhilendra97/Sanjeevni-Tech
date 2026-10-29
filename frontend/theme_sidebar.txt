@@ -1,0 +1,153 @@
+import {
+    Activity,
+    BarChart3,
+    BedDouble,
+    ClipboardList,
+    FileText,
+    FlaskConical,
+    Hospital,
+    LayoutDashboard,
+    LogOut,
+    Settings,
+    ShieldCheck,
+    Stethoscope,
+    Users,
+} from "lucide-react";
+import { NavLink, useNavigate } from "react-router-dom";
+
+const operations = [
+    {
+        label: "Overview",
+        path: "/admin",
+        icon: LayoutDashboard,
+    },
+    {
+        label: "Departments",
+        path: "/admin/departments",
+        icon: Hospital,
+    },
+    {
+        label: "Doctors",
+        path: "/admin/doctors",
+        icon: Stethoscope,
+    },
+    {
+        label: "Nurses",
+        path: "/admin/nurses",
+        icon: Users,
+    },
+    {
+        label: "Staff",
+        path: "/admin/staff",
+        icon: ClipboardList,
+    },
+    {
+        label: "Users",
+        path: "/admin/users",
+        icon: ShieldCheck,
+    },
+    {
+        label: "Wards",
+        path: "/admin/wards",
+        icon: BedDouble,
+    },
+    {
+        label: "Laboratory",
+        path: "/admin/laboratory",
+        icon: FlaskConical,
+    },
+    {
+        label: "Analytics",
+        path: "/admin/analytics",
+        icon: BarChart3,
+    },
+    {
+        label: "Audit Logs",
+        path: "/admin/audit-logs",
+        icon: FileText,
+    },
+    {
+        label: "Hospital Settings",
+        path: "/admin/hospital-settings",
+        icon: Settings,
+    },
+];
+
+export default function Sidebar() {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("user");
+        navigate("/login", { replace: true });
+    };
+
+    return (
+        <aside className="fixed inset-y-0 left-0 z-40 hidden w-[270px] border-r border-white/[0.06] bg-[#050b16] lg:flex lg:flex-col">
+            {/* Brand */}
+            <div className="flex h-[78px] items-center gap-3 border-b border-white/[0.06] px-6">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-400/10 bg-cyan-400/[0.07] text-cyan-300">
+                    <Activity size={21} />
+                </div>
+
+                <div>
+                    <p className="text-sm font-bold tracking-tight text-white">
+                        Sanjeevni Tech
+                    </p>
+
+                    <p className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.17em] text-slate-600">
+                        Smart Hospital
+                    </p>
+                </div>
+            </div>
+
+            {/* Operations */}
+            <div className="flex-1 overflow-y-auto px-4 py-5">
+                <p className="mb-3 px-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600">
+                    Hospital Operations
+                </p>
+
+                <nav className="space-y-1">
+                    {operations.map((item) => {
+                        const Icon = item.icon;
+
+                        return (
+                            <NavLink
+                                key={item.path}
+                                to={item.path}
+                                end={item.path === "/admin"}
+                                className={({ isActive }) =>
+                                    [
+                                        "group flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium transition-all duration-200",
+                                        isActive
+                                            ? "border border-cyan-400/10 bg-cyan-400/[0.07] text-cyan-200 shadow-lg shadow-cyan-950/10"
+                                            : "border border-transparent text-slate-500 hover:bg-white/[0.035] hover:text-slate-200",
+                                    ].join(" ")
+                                }
+                            >
+                                <Icon
+                                    size={18}
+                                    className="shrink-0"
+                                />
+
+                                <span>{item.label}</span>
+                            </NavLink>
+                        );
+                    })}
+                </nav>
+            </div>
+
+            {/* Bottom */}
+            <div className="border-t border-white/[0.06] p-4">
+                <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="flex w-full items-center gap-3 rounded-xl border border-transparent px-3 py-3 text-sm font-medium text-slate-500 transition hover:border-rose-400/10 hover:bg-rose-400/[0.04] hover:text-rose-300"
+                >
+                    <LogOut size={18} />
+                    Logout
+                </button>
+            </div>
+        </aside>
+    );
+}

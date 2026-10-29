@@ -1,0 +1,3587 @@
+﻿@import "tailwindcss";
+
+/* =========================================================
+   SANJEEVNI TECH
+   Premium Healthcare ERP Design System
+   ========================================================= */
+
+:root {
+  --hospital-bg: #eef5fa;
+  --hospital-surface: #ffffff;
+  --hospital-surface-soft: #f7fbfd;
+
+  --hospital-navy: #153653;
+  --hospital-navy-deep: #0f2d46;
+  --hospital-navy-soft: #1d4c6d;
+
+  --hospital-blue: #3478ed;
+  --hospital-cyan: #08b9d8;
+  --hospital-indigo: #6267df;
+
+  --hospital-text: #153653;
+  --hospital-text-secondary: #55718a;
+  --hospital-text-muted: #8298aa;
+
+  --hospital-border: #d8e6ef;
+  --hospital-border-soft: #e7f0f5;
+
+  --hospital-success: #159570;
+  --hospital-warning: #d58a18;
+  --hospital-danger: #d84b5b;
+  --hospital-info: #3478ed;
+
+  --hospital-shadow-sm: 0 2px 10px rgba(21, 54, 83, .05);
+  --hospital-shadow: 0 8px 28px rgba(21, 54, 83, .08);
+  --hospital-shadow-lg: 0 18px 50px rgba(21, 54, 83, .13);
+
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  color: var(--hospital-text);
+  background: var(--hospital-bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  background: var(--hospital-bg);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 85% 0%, rgba(8,185,216,.07), transparent 25%),
+    linear-gradient(135deg, #f4f9fc 0%, #eef5fa 50%, #eaf3f8 100%);
+  color: var(--hospital-text);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: rgba(8,185,216,.18);
+  color: var(--hospital-navy);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #edf4f8;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b9cedb;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8eabba;
+}
+
+/* =========================================================
+   APP SHELL
+   ========================================================= */
+
+.app-shell {
+  min-height: 100vh;
+  background: var(--hospital-bg);
+}
+
+main {
+  min-width: 0;
+}
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.hospital-sidebar {
+  background:
+    radial-gradient(circle at 20% 0%, rgba(8,185,216,.14), transparent 25%),
+    linear-gradient(180deg, #194967 0%, #123b58 48%, #0f3049 100%);
+  color: #fff;
+  box-shadow: 8px 0 28px rgba(15,45,70,.13);
+  border-right: 1px solid rgba(255,255,255,.08);
+}
+
+.hospital-sidebar .sidebar-brand {
+  border-bottom: 1px solid rgba(255,255,255,.10);
+}
+
+.hospital-sidebar .sidebar-logo {
+  background: linear-gradient(135deg, #08b9d8, #3478ed);
+  box-shadow: 0 8px 22px rgba(8,185,216,.22);
+}
+
+.hospital-sidebar .sidebar-section-title {
+  color: rgba(255,255,255,.43);
+  letter-spacing: .11em;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.hospital-sidebar .sidebar-link {
+  color: rgba(255,255,255,.68);
+  border: 1px solid transparent;
+  transition:
+    background .18s ease,
+    color .18s ease,
+    transform .18s ease,
+    border-color .18s ease;
+}
+
+.hospital-sidebar .sidebar-link:hover {
+  color: #fff;
+  background: rgba(255,255,255,.075);
+  border-color: rgba(255,255,255,.08);
+  transform: translateX(2px);
+}
+
+.hospital-sidebar .sidebar-link.active {
+  color: #0d3550;
+  background: linear-gradient(135deg, #e9fbff, #d8f7fb);
+  border-color: rgba(8,185,216,.30);
+  box-shadow: 0 7px 20px rgba(0,0,0,.10);
+}
+
+.hospital-sidebar .sidebar-link.active svg {
+  color: #078ca5;
+}
+
+.hospital-sidebar .sidebar-logout {
+  color: rgba(255,255,255,.62);
+  border-top: 1px solid rgba(255,255,255,.10);
+}
+
+.hospital-sidebar .sidebar-logout button:hover {
+  color: #fff;
+  background: rgba(216,75,91,.13);
+}
+
+/* =========================================================
+   TOP NAVBAR
+   ========================================================= */
+
+.hospital-navbar {
+  background: rgba(255,255,255,.92);
+  border-bottom: 1px solid var(--hospital-border);
+  box-shadow: 0 2px 16px rgba(21,54,83,.045);
+  backdrop-filter: blur(18px);
+}
+
+.hospital-navbar .navbar-title {
+  color: var(--hospital-text);
+  font-weight: 800;
+}
+
+.hospital-navbar .navbar-subtitle {
+  color: var(--hospital-text-muted);
+}
+
+.hospital-navbar .navbar-action {
+  color: var(--hospital-text-secondary);
+  background: #f4f9fc;
+  border: 1px solid var(--hospital-border-soft);
+}
+
+.hospital-navbar .navbar-action:hover {
+  background: #edf7fb;
+  color: var(--hospital-navy);
+  border-color: #cfe2ec;
+}
+
+.hospital-navbar .navbar-avatar {
+  background: linear-gradient(135deg, #3478ed, #6267df);
+  box-shadow: 0 5px 15px rgba(52,120,237,.20);
+}
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.hospital-page {
+  min-height: calc(100vh - 76px);
+  padding: 28px;
+  background:
+    radial-gradient(circle at 95% 0%, rgba(8,185,216,.045), transparent 20%),
+    var(--hospital-bg);
+}
+
+.hospital-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.hospital-page-eyebrow {
+  color: var(--hospital-cyan);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+
+.hospital-page-title {
+  margin: 4px 0 0;
+  color: var(--hospital-text);
+  font-size: clamp(24px, 2.2vw, 32px);
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -.025em;
+}
+
+.hospital-page-description {
+  margin-top: 8px;
+  color: var(--hospital-text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.hospital-card {
+  background: var(--hospital-surface);
+  border: 1px solid var(--hospital-border);
+  border-radius: 16px;
+  box-shadow: var(--hospital-shadow-sm);
+}
+
+.hospital-card:hover {
+  box-shadow: var(--hospital-shadow);
+}
+
+.hospital-stat-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--hospital-surface);
+  border: 1px solid var(--hospital-border);
+  border-radius: 16px;
+  box-shadow: var(--hospital-shadow-sm);
+}
+
+.hospital-stat-card::after {
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  right: -45px;
+  top: -45px;
+  border-radius: 50%;
+  background: rgba(8,185,216,.055);
+}
+
+.hospital-stat-label {
+  color: var(--hospital-text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .065em;
+}
+
+.hospital-stat-value {
+  color: var(--hospital-text);
+  font-size: 27px;
+  line-height: 1;
+  font-weight: 800;
+}
+
+.hospital-stat-meta {
+  color: var(--hospital-text-secondary);
+  font-size: 12px;
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.hospital-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 15px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #3478ed, #2f66d2);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 750;
+  box-shadow: 0 6px 15px rgba(52,120,237,.18);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.hospital-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 9px 20px rgba(52,120,237,.24);
+}
+
+.hospital-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 15px;
+  border: 1px solid var(--hospital-border);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--hospital-text-secondary);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.hospital-btn-secondary:hover {
+  background: #f5fafc;
+  color: var(--hospital-text);
+  border-color: #c7dce7;
+}
+
+.hospital-btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 15px;
+  border: 1px solid rgba(216,75,91,.18);
+  border-radius: 10px;
+  background: #fff5f6;
+  color: #bd3f4e;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   FORM CONTROLS
+   ========================================================= */
+
+.hospital-label {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--hospital-text);
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.hospital-input,
+.hospital-select,
+.hospital-textarea {
+  width: 100%;
+  border: 1px solid #cfdfe8;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--hospital-text);
+  outline: none;
+  font-size: 13px;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.hospital-input,
+.hospital-select {
+  height: 42px;
+  padding: 0 12px;
+}
+
+.hospital-textarea {
+  min-height: 100px;
+  padding: 11px 12px;
+  resize: vertical;
+}
+
+.hospital-input::placeholder,
+.hospital-textarea::placeholder {
+  color: #9aadb9;
+}
+
+.hospital-input:focus,
+.hospital-select:focus,
+.hospital-textarea:focus {
+  border-color: #67cfe0;
+  box-shadow: 0 0 0 3px rgba(8,185,216,.10);
+}
+
+/* =========================================================
+   TABLES
+   ========================================================= */
+
+.hospital-table-wrap {
+  overflow: hidden;
+  border: 1px solid var(--hospital-border);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: var(--hospital-shadow-sm);
+}
+
+.hospital-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.hospital-table thead {
+  background: #f5f9fb;
+}
+
+.hospital-table th {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--hospital-border);
+  color: #6d8495;
+  font-size: 10px;
+  font-weight: 800;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+}
+
+.hospital-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #edf3f6;
+  color: var(--hospital-text-secondary);
+  font-size: 13px;
+}
+
+.hospital-table tbody tr:hover {
+  background: #f8fcfd;
+}
+
+.hospital-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.hospital-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.hospital-badge-success {
+  color: #11795d;
+  background: #e9f8f3;
+}
+
+.hospital-badge-warning {
+  color: #9b6710;
+  background: #fff5df;
+}
+
+.hospital-badge-danger {
+  color: #ad3b49;
+  background: #fff0f2;
+}
+
+.hospital-badge-info {
+  color: #2862bf;
+  background: #edf4ff;
+}
+
+/* =========================================================
+   MODALS
+   ========================================================= */
+
+.hospital-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(11,34,52,.52);
+  backdrop-filter: blur(5px);
+}
+
+.hospital-modal {
+  width: min(680px, 100%);
+  max-height: calc(100vh - 40px);
+  overflow: hidden;
+  border: 1px solid var(--hospital-border);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: var(--hospital-shadow-lg);
+}
+
+.hospital-modal-header {
+  padding: 20px 22px;
+  border-bottom: 1px solid var(--hospital-border-soft);
+  background: #fff;
+}
+
+.hospital-modal-title {
+  color: var(--hospital-text);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.hospital-modal-subtitle {
+  margin-top: 4px;
+  color: var(--hospital-text-muted);
+  font-size: 12px;
+}
+
+.hospital-modal-body {
+  max-height: calc(100vh - 190px);
+  overflow-y: auto;
+  padding: 22px;
+  background: #fff;
+}
+
+.hospital-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 15px 22px;
+  border-top: 1px solid var(--hospital-border-soft);
+  background: #fbfdfe;
+}
+
+/* =========================================================
+   LOGIN
+   ========================================================= */
+
+.login-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  background: #f3f8fb;
+}
+
+.login-brand-panel {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: clamp(36px, 6vw, 90px);
+  background:
+    radial-gradient(circle at 15% 15%, rgba(8,185,216,.23), transparent 27%),
+    radial-gradient(circle at 85% 85%, rgba(52,120,237,.18), transparent 30%),
+    linear-gradient(145deg, #123b58 0%, #153653 52%, #0e2d45 100%);
+  color: #fff;
+}
+
+.login-brand-panel::before {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  right: -190px;
+  top: -170px;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 50%;
+}
+
+.login-brand-panel::after {
+  content: "";
+  position: absolute;
+  width: 620px;
+  height: 620px;
+  left: -350px;
+  bottom: -370px;
+  border: 1px solid rgba(8,185,216,.12);
+  border-radius: 50%;
+}
+
+.login-brand-content {
+  position: relative;
+  z-index: 2;
+  max-width: 570px;
+}
+
+.login-brand-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #08b9d8, #3478ed);
+  box-shadow: 0 12px 30px rgba(8,185,216,.22);
+}
+
+.login-brand-kicker {
+  margin-top: 28px;
+  color: #67e0ef;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .15em;
+}
+
+.login-brand-title {
+  margin-top: 12px;
+  color: #fff;
+  font-size: clamp(36px, 4.3vw, 62px);
+  line-height: 1.03;
+  font-weight: 850;
+  letter-spacing: -.045em;
+}
+
+.login-brand-description {
+  max-width: 500px;
+  margin-top: 22px;
+  color: rgba(255,255,255,.70);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.login-feature-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.login-feature {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: rgba(255,255,255,.82);
+  font-size: 13px;
+}
+
+.login-feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  color: #67e0ef;
+  background: rgba(8,185,216,.11);
+  border: 1px solid rgba(8,185,216,.18);
+}
+
+.login-form-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 36px;
+  background: #fff;
+}
+
+.login-form-inner {
+  width: min(430px, 100%);
+}
+
+.login-eyebrow {
+  color: var(--hospital-cyan);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.login-form-panel h2 {
+  margin: 9px 0 0;
+  color: var(--hospital-text);
+  font-size: 31px;
+  line-height: 1.15;
+  font-weight: 850;
+  letter-spacing: -.03em;
+}
+
+.login-description {
+  margin-top: 10px;
+  color: var(--hospital-text-secondary);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.login-form {
+  margin-top: 27px;
+}
+
+.field-group {
+  margin-bottom: 17px;
+}
+
+.field-group label {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--hospital-text);
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.input-shell {
+  position: relative;
+}
+
+.input-shell input {
+  width: 100%;
+  height: 46px;
+  padding: 0 42px 0 43px;
+  border: 1px solid #cfdee7;
+  border-radius: 11px;
+  outline: none;
+  background: #fff;
+  color: var(--hospital-text);
+  font-size: 13px;
+  transition: .15s ease;
+}
+
+.input-shell input:focus {
+  border-color: #65cfe0;
+  box-shadow: 0 0 0 3px rgba(8,185,216,.10);
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #8ba1af;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 4px;
+  border: 0;
+  background: transparent;
+  color: #8298aa;
+}
+
+.forgot-button {
+  float: right;
+  margin-top: 7px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #3478ed;
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.login-submit {
+  width: 100%;
+  height: 47px;
+  margin-top: 8px;
+  border: 0;
+  border-radius: 11px;
+  background: linear-gradient(135deg, #3478ed, #2862d0);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 9px 22px rgba(52,120,237,.19);
+}
+
+.login-error {
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  border: 1px solid #f2c9cf;
+  border-radius: 10px;
+  background: #fff3f5;
+  color: #ae3b4a;
+  font-size: 12px;
+}
+
+.secure-session-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 17px;
+  color: var(--hospital-text-muted);
+  font-size: 11px;
+}
+
+.remember-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.login-footer {
+  margin-top: 32px;
+  padding-top: 18px;
+  border-top: 1px solid #e7eef3;
+  color: #91a4b1;
+  font-size: 10px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1024px) {
+  .login-page {
+    grid-template-columns: 1fr;
+  }
+
+  .login-brand-panel {
+    min-height: 330px;
+    padding: 42px;
+  }
+
+  .login-brand-title {
+    font-size: 40px;
+  }
+
+  .login-form-panel {
+    min-height: calc(100vh - 330px);
+  }
+}
+
+@media (max-width: 768px) {
+  .hospital-page {
+    padding: 18px;
+  }
+
+  .hospital-page-header {
+    flex-direction: column;
+  }
+
+  .hospital-modal-overlay {
+    padding: 10px;
+  }
+
+  .hospital-modal {
+    max-height: calc(100vh - 20px);
+  }
+
+  .hospital-modal-body {
+    max-height: calc(100vh - 170px);
+    padding: 17px;
+  }
+
+  .login-brand-panel {
+    min-height: 285px;
+    padding: 30px 24px;
+  }
+
+  .login-brand-title {
+    font-size: 34px;
+  }
+
+  .login-brand-description,
+  .login-feature-list {
+    display: none;
+  }
+
+  .login-form-panel {
+    padding: 28px 22px;
+  }
+}
+
+@media (max-width: 520px) {
+  .hospital-page {
+    padding: 14px;
+  }
+
+  .login-brand-panel {
+    min-height: 235px;
+  }
+
+  .login-brand-title {
+    font-size: 29px;
+  }
+
+  .login-form-panel h2 {
+    font-size: 27px;
+  }
+}
+
+/* =========================================================
+   SAFETY OVERRIDES FOR OLD DARK TAILWIND CLASSES
+   ========================================================= */
+
+.hospital-light-workspace,
+.hospital-light-workspace * {
+  --tw-bg-opacity: 1;
+}
+
+.hospital-light-workspace {
+  color: var(--hospital-text);
+}
+
+.hospital-light-workspace .bg-slate-950,
+.hospital-light-workspace .bg-slate-900,
+.hospital-light-workspace .bg-slate-800,
+.hospital-light-workspace .bg-black {
+  background-color: #fff !important;
+}
+
+.hospital-light-workspace .text-white {
+  color: var(--hospital-text) !important;
+}
+
+.hospital-light-workspace .text-slate-100,
+.hospital-light-workspace .text-slate-200,
+.hospital-light-workspace .text-slate-300,
+.hospital-light-workspace .text-slate-400 {
+  color: var(--hospital-text-secondary) !important;
+}
+
+.hospital-light-workspace .border-slate-700,
+.hospital-light-workspace .border-slate-800 {
+  border-color: var(--hospital-border) !important;
+}
+
+/* =========================================================
+   SANJEEVNI TECH - FINAL UI CONSISTENCY LAYER
+   Login palette:
+   Navy #153653
+   Cyan #08b9d8
+   Blue #3478ed
+   Background #eef5fa
+   White surfaces
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   ADMIN WORKSPACE MUST ALWAYS BE LIGHT
+   --------------------------------------------------------- */
+
+main.hospital-light-workspace {
+  min-height: calc(100vh - 72px) !important;
+  background:
+    radial-gradient(
+      circle at 95% 0%,
+      rgba(8,185,216,.045),
+      transparent 23%
+    ),
+    #eef5fa !important;
+
+  color: #153653 !important;
+}
+
+
+/* ---------------------------------------------------------
+   REMOVE LEGACY DARK BACKGROUNDS FROM ALL ADMIN MODULES
+   --------------------------------------------------------- */
+
+main.hospital-light-workspace
+[class*="bg-[#0"],
+main.hospital-light-workspace
+[class*="bg-[#1"],
+main.hospital-light-workspace
+[class*="bg-[#2"],
+main.hospital-light-workspace
+.bg-black,
+main.hospital-light-workspace
+.bg-slate-950,
+main.hospital-light-workspace
+.bg-slate-900,
+main.hospital-light-workspace
+.bg-slate-800 {
+
+  background-color: #ffffff !important;
+}
+
+
+/* Dark translucent surfaces */
+
+main.hospital-light-workspace
+[class*="bg-[#0"][class*="/"],
+main.hospital-light-workspace
+[class*="bg-[#1"][class*="/"],
+main.hospital-light-workspace
+[class*="bg-[#2"][class*="/"],
+main.hospital-light-workspace
+.bg-slate-950\/50,
+main.hospital-light-workspace
+.bg-slate-950\/60,
+main.hospital-light-workspace
+.bg-slate-950\/70,
+main.hospital-light-workspace
+.bg-slate-950\/80 {
+
+  background-color: #ffffff !important;
+}
+
+
+/* ---------------------------------------------------------
+   LEGACY DARK TEXT -> LOGIN PALETTE
+   --------------------------------------------------------- */
+
+main.hospital-light-workspace
+.text-white {
+  color: #153653 !important;
+}
+
+main.hospital-light-workspace
+.text-slate-50,
+main.hospital-light-workspace
+.text-slate-100,
+main.hospital-light-workspace
+.text-slate-200 {
+
+  color: #153653 !important;
+}
+
+main.hospital-light-workspace
+.text-slate-300,
+main.hospital-light-workspace
+.text-slate-400,
+main.hospital-light-workspace
+.text-slate-500 {
+
+  color: #55718a !important;
+}
+
+
+/* Dark arbitrary text colors used by older dashboard */
+
+main.hospital-light-workspace
+[class*="text-[#0"],
+main.hospital-light-workspace
+[class*="text-[#1"],
+main.hospital-light-workspace
+[class*="text-[#2"] {
+
+  color: #153653 !important;
+}
+
+
+/* Preserve intentionally colored statuses */
+
+main.hospital-light-workspace
+.text-emerald-400,
+main.hospital-light-workspace
+.text-emerald-500,
+main.hospital-light-workspace
+.text-green-400,
+main.hospital-light-workspace
+.text-green-500 {
+
+  color: #159570 !important;
+}
+
+main.hospital-light-workspace
+.text-red-400,
+main.hospital-light-workspace
+.text-red-500 {
+
+  color: #d84b5b !important;
+}
+
+main.hospital-light-workspace
+.text-amber-400,
+main.hospital-light-workspace
+.text-amber-500 {
+
+  color: #d58a18 !important;
+}
+
+
+/* ---------------------------------------------------------
+   LEGACY DARK BORDERS
+   --------------------------------------------------------- */
+
+main.hospital-light-workspace
+.border-slate-700,
+main.hospital-light-workspace
+.border-slate-800,
+main.hospital-light-workspace
+.border-white\/5,
+main.hospital-light-workspace
+.border-white\/10 {
+
+  border-color: #d8e6ef !important;
+}
+
+
+/* ---------------------------------------------------------
+   ADMIN CARDS
+   --------------------------------------------------------- */
+
+main.hospital-light-workspace
+.rounded-2xl.border,
+main.hospital-light-workspace
+.rounded-3xl.border {
+
+  border-color: #d8e6ef !important;
+  box-shadow: 0 6px 24px rgba(21,54,83,.055) !important;
+}
+
+
+/* ---------------------------------------------------------
+   DARK SEARCH / FILTER INPUTS
+   --------------------------------------------------------- */
+
+main.hospital-light-workspace
+input[class*="bg-"],
+main.hospital-light-workspace
+select[class*="bg-"],
+main.hospital-light-workspace
+textarea[class*="bg-"] {
+
+  background-color: #ffffff !important;
+  color: #153653 !important;
+  border-color: #cfdfe8 !important;
+}
+
+main.hospital-light-workspace
+input::placeholder,
+main.hospital-light-workspace
+textarea::placeholder {
+
+  color: #91a5b3 !important;
+}
+
+
+/* ---------------------------------------------------------
+   DEPARTMENT HEADER ACTIONS
+   --------------------------------------------------------- */
+
+.department-page-actions {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+}
+
+
+/* Both actions same height */
+
+.department-page-actions button {
+  min-height: 46px !important;
+  height: 46px !important;
+  white-space: nowrap !important;
+}
+
+
+/* Refresh */
+
+.department-page-actions button:first-child {
+  border: 1px solid #d5e4ec !important;
+  background: #ffffff !important;
+  color: #55718a !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 12px rgba(21,54,83,.06) !important;
+}
+
+
+/* Add Department */
+
+.department-page-actions button:last-child {
+  border: 0 !important;
+  border-radius: 12px !important;
+  background: linear-gradient(
+    135deg,
+    #08b9d8,
+    #3478ed
+  ) !important;
+
+  color: #ffffff !important;
+
+  box-shadow:
+    0 8px 20px rgba(52,120,237,.20) !important;
+}
+
+
+/* ---------------------------------------------------------
+   UNIVERSAL PROFESSIONAL MODAL
+   This makes Doctor modal match Department modal.
+   --------------------------------------------------------- */
+
+main.hospital-light-workspace
+.fixed.inset-0 {
+
+  background: rgba(15,45,70,.48) !important;
+  backdrop-filter: blur(6px) !important;
+}
+
+
+/* Modal outer panel */
+
+main.hospital-light-workspace
+.fixed.inset-0
+> div[class*="bg-"] {
+
+  background: #ffffff !important;
+  color: #153653 !important;
+  border: 1px solid #d8e6ef !important;
+  border-radius: 22px !important;
+  box-shadow:
+    0 25px 70px rgba(15,45,70,.20) !important;
+
+  overflow: hidden !important;
+}
+
+
+/* Catch nested modal containers */
+
+main.hospital-light-workspace
+.fixed.inset-0
+[class*="bg-slate-950"],
+main.hospital-light-workspace
+.fixed.inset-0
+[class*="bg-slate-900"],
+main.hospital-light-workspace
+.fixed.inset-0
+[class*="bg-[#0"] {
+
+  background: #ffffff !important;
+  color: #153653 !important;
+}
+
+
+/* Modal headings */
+
+main.hospital-light-workspace
+.fixed.inset-0
+h2,
+main.hospital-light-workspace
+.fixed.inset-0
+h3 {
+
+  color: #153653 !important;
+}
+
+
+/* Modal supporting text */
+
+main.hospital-light-workspace
+.fixed.inset-0
+p {
+
+  color: #8298aa !important;
+}
+
+
+/* Modal labels */
+
+main.hospital-light-workspace
+.fixed.inset-0
+label {
+
+  color: #153653 !important;
+  font-weight: 750 !important;
+}
+
+
+/* Modal inputs */
+
+main.hospital-light-workspace
+.fixed.inset-0
+input,
+main.hospital-light-workspace
+.fixed.inset-0
+select,
+main.hospital-light-workspace
+.fixed.inset-0
+textarea {
+
+  background: #ffffff !important;
+  color: #153653 !important;
+  border: 1px solid #cfdfe8 !important;
+  border-radius: 11px !important;
+  outline: none !important;
+}
+
+
+/* Placeholder */
+
+main.hospital-light-workspace
+.fixed.inset-0
+input::placeholder,
+main.hospital-light-workspace
+.fixed.inset-0
+textarea::placeholder {
+
+  color: #91a5b3 !important;
+}
+
+
+/* Focus */
+
+main.hospital-light-workspace
+.fixed.inset-0
+input:focus,
+main.hospital-light-workspace
+.fixed.inset-0
+select:focus,
+main.hospital-light-workspace
+.fixed.inset-0
+textarea:focus {
+
+  border-color: #68cedf !important;
+
+  box-shadow:
+    0 0 0 3px rgba(8,185,216,.10) !important;
+}
+
+
+/* Modal dark text utility classes */
+
+main.hospital-light-workspace
+.fixed.inset-0
+.text-white {
+
+  color: #153653 !important;
+}
+
+main.hospital-light-workspace
+.fixed.inset-0
+.text-slate-300,
+main.hospital-light-workspace
+.fixed.inset-0
+.text-slate-400,
+main.hospital-light-workspace
+.fixed.inset-0
+.text-slate-500 {
+
+  color: #55718a !important;
+}
+
+
+/* Modal footer */
+
+main.hospital-light-workspace
+.fixed.inset-0
+.border-t {
+
+  border-color: #e5eef3 !important;
+}
+
+
+/* Cancel buttons */
+
+main.hospital-light-workspace
+.fixed.inset-0
+button[class*="border"] {
+
+  border-color: #d5e4ec !important;
+  background: #ffffff !important;
+  color: #55718a !important;
+}
+
+
+/* Primary modal buttons */
+
+main.hospital-light-workspace
+.fixed.inset-0
+button[class*="bg-cyan"],
+main.hospital-light-workspace
+.fixed.inset-0
+button[class*="bg-blue"] {
+
+  background: linear-gradient(
+    135deg,
+    #08b9d8,
+    #3478ed
+  ) !important;
+
+  color: #ffffff !important;
+  border: 0 !important;
+}
+
+
+/* Modal close button */
+
+main.hospital-light-workspace
+.fixed.inset-0
+button[aria-label*="lose"],
+main.hospital-light-workspace
+.fixed.inset-0
+button[aria-label*="lose"] {
+
+  background: #f3f8fb !important;
+  color: #55718a !important;
+  border-color: transparent !important;
+}
+
+
+/* ---------------------------------------------------------
+   CHECKBOX
+   --------------------------------------------------------- */
+
+main.hospital-light-workspace
+.fixed.inset-0
+input[type="checkbox"] {
+
+  accent-color: #08b9d8 !important;
+}
+
+
+/* ---------------------------------------------------------
+   DOCTOR PAGE LIGHT NORMALIZATION
+   --------------------------------------------------------- */
+
+main.hospital-light-workspace
+.doctors-page,
+main.hospital-light-workspace
+.doctor-page {
+
+  background: transparent !important;
+  color: #153653 !important;
+}
+
+
+/* ---------------------------------------------------------
+   DEPARTMENT PAGE LIGHT NORMALIZATION
+   --------------------------------------------------------- */
+
+main.hospital-light-workspace
+.departments-page,
+main.hospital-light-workspace
+.department-page {
+
+  background: transparent !important;
+  color: #153653 !important;
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE ACTION BUTTONS
+   --------------------------------------------------------- */
+
+@media (max-width: 640px) {
+
+  .department-page-actions {
+    width: 100% !important;
+    justify-content: stretch !important;
+  }
+
+  .department-page-actions button {
+    flex: 1 1 auto !important;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   TABLE / DIRECTORY LIGHT MODE
+   --------------------------------------------------------- */
+
+main.hospital-light-workspace
+table {
+
+  background: #ffffff !important;
+  color: #153653 !important;
+}
+
+main.hospital-light-workspace
+thead {
+
+  background: #f5f9fb !important;
+}
+
+main.hospital-light-workspace
+th {
+
+  color: #6d8495 !important;
+  border-color: #d8e6ef !important;
+}
+
+main.hospital-light-workspace
+td {
+
+  color: #55718a !important;
+  border-color: #edf3f6 !important;
+}
+
+main.hospital-light-workspace
+tbody tr:hover {
+
+  background: #f8fcfd !important;
+}
+
+
+/* ---------------------------------------------------------
+   REMOVE DARK BODY FLASH / LEGACY ROOT BACKGROUND
+   --------------------------------------------------------- */
+
+body,
+#root {
+
+  background-color: #eef5fa;
+}
+
+
+/* ---------------------------------------------------------
+   NAVBAR MUST STAY WHITE
+   --------------------------------------------------------- */
+
+header.hospital-navbar {
+
+  background: rgba(255,255,255,.94) !important;
+  color: #153653 !important;
+}
+
+
+/* ---------------------------------------------------------
+   KEEP SIDEBAR NAVY
+   --------------------------------------------------------- */
+
+aside.hospital-sidebar {
+
+  background:
+    radial-gradient(
+      circle at 20% 0%,
+      rgba(8,185,216,.14),
+      transparent 25%
+    ),
+    linear-gradient(
+      180deg,
+      #194967 0%,
+      #123b58 48%,
+      #0f3049 100%
+    ) !important;
+
+  color: #ffffff !important;
+}
+
+
+/* Sidebar must NOT be affected by light workspace overrides */
+
+aside.hospital-sidebar .text-white {
+  color: #ffffff !important;
+}
+
+aside.hospital-sidebar .text-slate-300,
+aside.hospital-sidebar .text-slate-400,
+aside.hospital-sidebar .text-slate-500 {
+  color: rgba(255,255,255,.68) !important;
+}
+
+
+/* ---------------------------------------------------------
+   MODAL SCROLL SAFETY
+   --------------------------------------------------------- */
+
+main.hospital-light-workspace
+.fixed.inset-0
+.max-h-\[90vh\],
+main.hospital-light-workspace
+.fixed.inset-0
+.max-h-\[85vh\] {
+
+  max-height: calc(100vh - 36px) !important;
+  overflow-y: auto !important;
+}
+
+
+/* ---------------------------------------------------------
+   FORCE MODAL CONTENT LIGHT
+   --------------------------------------------------------- */
+
+main.hospital-light-workspace
+.fixed.inset-0
+div[class*="overflow-y-auto"] {
+
+  background: #ffffff !important;
+  color: #153653 !important;
+}
+
+
+/* ---------------------------------------------------------
+   ICON CONTAINERS
+   --------------------------------------------------------- */
+
+main.hospital-light-workspace
+.fixed.inset-0
+[class*="bg-cyan-400/"] {
+
+  background: #e8f9fc !important;
+}
+
+
+/* ==========================================================
+   SANJEEVNI TECH
+   MASTER PROFESSIONAL HEALTHCARE UI
+   ========================================================== */
+
+:root {
+  --st-bg: #eef5fa;
+  --st-surface: #ffffff;
+  --st-surface-soft: #f7fbfd;
+
+  --st-navy: #153653;
+  --st-navy-2: #194967;
+
+  --st-cyan: #08b9d8;
+  --st-blue: #3478ed;
+  --st-indigo: #6267df;
+
+  --st-text: #153653;
+  --st-text-2: #55718a;
+  --st-muted: #8298aa;
+
+  --st-border: #d8e6ef;
+  --st-border-soft: #e7f0f4;
+
+  --st-success: #159570;
+  --st-warning: #d58a18;
+  --st-danger: #d84b5b;
+}
+
+
+/* ==========================================================
+   GLOBAL
+   ========================================================== */
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--st-bg) !important;
+  color: var(--st-text);
+}
+
+
+/* ==========================================================
+   ADMIN WORKSPACE
+   ========================================================== */
+
+main.hospital-light-workspace {
+  min-height: calc(100vh - 76px);
+
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(8,185,216,.055),
+      transparent 25%
+    ),
+    #eef5fa !important;
+
+  color: var(--st-text) !important;
+}
+
+
+/* ==========================================================
+   REMOVE LEGACY DARK SURFACES
+   ========================================================== */
+
+main.hospital-light-workspace
+.bg-black,
+main.hospital-light-workspace
+.bg-slate-950,
+main.hospital-light-workspace
+.bg-slate-900,
+main.hospital-light-workspace
+.bg-slate-800,
+main.hospital-light-workspace
+[class*="bg-[#030712"],
+main.hospital-light-workspace
+[class*="bg-[#020617"],
+main.hospital-light-workspace
+[class*="bg-[#09111f"],
+main.hospital-light-workspace
+[class*="bg-[#0b1322"],
+main.hospital-light-workspace
+[class*="bg-[#0f172a"] {
+  background: #ffffff !important;
+}
+
+
+/* Dark translucent cards */
+
+main.hospital-light-workspace
+[class*="bg-white/[0.0"] {
+  background: #f8fbfd !important;
+}
+
+
+/* ==========================================================
+   CARDS
+   ========================================================== */
+
+main.hospital-light-workspace
+.rounded-2xl.border,
+main.hospital-light-workspace
+.rounded-3xl.border {
+  background: #ffffff !important;
+
+  border-color: var(--st-border) !important;
+
+  box-shadow:
+    0 5px 24px rgba(21,54,83,.055) !important;
+}
+
+
+/* ==========================================================
+   TEXT
+   ========================================================== */
+
+main.hospital-light-workspace
+.text-white,
+main.hospital-light-workspace
+.text-slate-50,
+main.hospital-light-workspace
+.text-slate-100,
+main.hospital-light-workspace
+.text-slate-200 {
+  color: #153653 !important;
+}
+
+main.hospital-light-workspace
+.text-slate-300,
+main.hospital-light-workspace
+.text-slate-400 {
+  color: #55718a !important;
+}
+
+main.hospital-light-workspace
+.text-slate-500,
+main.hospital-light-workspace
+.text-slate-600 {
+  color: #8298aa !important;
+}
+
+
+/* ==========================================================
+   DARK BORDERS
+   ========================================================== */
+
+main.hospital-light-workspace
+.border-slate-700,
+main.hospital-light-workspace
+.border-slate-800,
+main.hospital-light-workspace
+[class*="border-white/"] {
+  border-color: #d8e6ef !important;
+}
+
+
+/* ==========================================================
+   INPUTS
+   ========================================================== */
+
+main.hospital-light-workspace
+input,
+main.hospital-light-workspace
+select,
+main.hospital-light-workspace
+textarea {
+  background: #ffffff !important;
+  color: #153653 !important;
+  border-color: #cfdfe8 !important;
+}
+
+main.hospital-light-workspace
+input::placeholder,
+main.hospital-light-workspace
+textarea::placeholder {
+  color: #91a5b3 !important;
+}
+
+main.hospital-light-workspace
+input:focus,
+main.hospital-light-workspace
+select:focus,
+main.hospital-light-workspace
+textarea:focus {
+  outline: none !important;
+  border-color: #67cddd !important;
+
+  box-shadow:
+    0 0 0 3px rgba(8,185,216,.10) !important;
+}
+
+
+/* ==========================================================
+   DEPARTMENT + DOCTOR HEADER ACTIONS
+   ========================================================== */
+
+.department-actions,
+.doctor-actions {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+}
+
+.department-actions button,
+.doctor-actions button {
+  height: 46px !important;
+  min-height: 46px !important;
+
+  border-radius: 11px !important;
+
+  white-space: nowrap !important;
+}
+
+
+/* Refresh */
+
+.department-actions button:first-child,
+.doctor-actions button:first-child {
+  background: #ffffff !important;
+
+  color: #55718a !important;
+
+  border: 1px solid #d5e4ec !important;
+
+  box-shadow:
+    0 4px 12px rgba(21,54,83,.055) !important;
+}
+
+
+/* Add */
+
+.department-actions button:last-child,
+.doctor-actions button:last-child {
+  background:
+    linear-gradient(
+      135deg,
+      #08b9d8 0%,
+      #3478ed 100%
+    ) !important;
+
+  color: #ffffff !important;
+
+  border: 0 !important;
+
+  box-shadow:
+    0 8px 20px rgba(52,120,237,.18) !important;
+}
+
+
+/* ==========================================================
+   DIRECTORY / TABLE
+   ========================================================== */
+
+main.hospital-light-workspace table {
+  background: #ffffff !important;
+}
+
+main.hospital-light-workspace thead {
+  background: #f5f9fb !important;
+}
+
+main.hospital-light-workspace th {
+  color: #6e8799 !important;
+  border-color: #d8e6ef !important;
+}
+
+main.hospital-light-workspace td {
+  color: #55718a !important;
+  border-color: #edf3f6 !important;
+}
+
+main.hospital-light-workspace tbody tr:hover {
+  background: #f8fcfd !important;
+}
+
+
+/* ==========================================================
+   ALL MODALS - SAME DESIGN
+   ========================================================== */
+
+body .fixed.inset-0 {
+  background: rgba(15,45,70,.52) !important;
+  backdrop-filter: blur(7px) !important;
+}
+
+
+/* White modal surfaces */
+
+body .fixed.inset-0
+[class*="bg-slate-950"],
+body .fixed.inset-0
+[class*="bg-slate-900"],
+body .fixed.inset-0
+[class*="bg-[#0"],
+body .fixed.inset-0
+[class*="bg-[#1"] {
+  background: #ffffff !important;
+  color: #153653 !important;
+}
+
+
+/* Modal text */
+
+body .fixed.inset-0
+.text-white {
+  color: #153653 !important;
+}
+
+body .fixed.inset-0
+.text-slate-300,
+body .fixed.inset-0
+.text-slate-400,
+body .fixed.inset-0
+.text-slate-500 {
+  color: #55718a !important;
+}
+
+
+/* Modal headings */
+
+body .fixed.inset-0 h2,
+body .fixed.inset-0 h3 {
+  color: #153653 !important;
+}
+
+
+/* Modal labels */
+
+body .fixed.inset-0 label {
+  color: #153653 !important;
+  font-weight: 750 !important;
+}
+
+
+/* Modal fields */
+
+body .fixed.inset-0 input,
+body .fixed.inset-0 select,
+body .fixed.inset-0 textarea {
+  background: #ffffff !important;
+  color: #153653 !important;
+
+  border: 1px solid #cfdfe8 !important;
+
+  border-radius: 11px !important;
+}
+
+body .fixed.inset-0 input::placeholder,
+body .fixed.inset-0 textarea::placeholder {
+  color: #91a5b3 !important;
+}
+
+
+/* Modal footer */
+
+body .fixed.inset-0
+.border-t {
+  border-color: #e5eef3 !important;
+}
+
+
+/* Modal primary buttons */
+
+body .fixed.inset-0
+button[class*="bg-cyan"],
+body .fixed.inset-0
+button[class*="bg-blue"] {
+  background:
+    linear-gradient(
+      135deg,
+      #08b9d8,
+      #3478ed
+    ) !important;
+
+  color: #ffffff !important;
+
+  border: 0 !important;
+}
+
+
+/* Modal cancel */
+
+body .fixed.inset-0
+button[class*="border"] {
+  background: #ffffff !important;
+  color: #55718a !important;
+  border-color: #d5e4ec !important;
+}
+
+
+/* ==========================================================
+   CHECKBOX
+   ========================================================== */
+
+body .fixed.inset-0
+input[type="checkbox"] {
+  accent-color: #08b9d8 !important;
+}
+
+
+/* ==========================================================
+   LOGIN - KEEP NAVY / CYAN / BLUE MASTER PALETTE
+   ========================================================== */
+
+.login-brand-panel {
+  background:
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(8,185,216,.18),
+      transparent 30%
+    ),
+    linear-gradient(
+      145deg,
+      #153653 0%,
+      #123f5d 55%,
+      #0e3049 100%
+    ) !important;
+}
+
+.login-form-panel {
+  background: #ffffff !important;
+}
+
+.login-submit {
+  background:
+    linear-gradient(
+      135deg,
+      #08b9d8,
+      #3478ed
+    ) !important;
+
+  color: #ffffff !important;
+}
+
+
+/* ==========================================================
+   NAVBAR
+   ========================================================== */
+
+.hospital-navbar {
+  background:
+    rgba(255,255,255,.96) !important;
+
+  color: #153653 !important;
+
+  border-bottom:
+    1px solid #dfeaf0 !important;
+
+  box-shadow:
+    0 4px 18px rgba(21,54,83,.045) !important;
+
+  backdrop-filter: blur(12px);
+}
+
+
+/* ==========================================================
+   SIDEBAR
+   ========================================================== */
+
+.hospital-sidebar {
+  background:
+    radial-gradient(
+      circle at 15% 0%,
+      rgba(8,185,216,.16),
+      transparent 28%
+    ),
+    linear-gradient(
+      180deg,
+      #194967 0%,
+      #123c59 52%,
+      #0f3049 100%
+    ) !important;
+
+  color: #ffffff !important;
+}
+
+.hospital-sidebar .text-white {
+  color: #ffffff !important;
+}
+
+.hospital-sidebar .text-slate-300,
+.hospital-sidebar .text-slate-400,
+.hospital-sidebar .text-slate-500 {
+  color: rgba(255,255,255,.68) !important;
+}
+
+
+/* ==========================================================
+   DASHBOARD GRAPH
+   ========================================================== */
+
+main.hospital-light-workspace
+.recharts-wrapper {
+  background: transparent !important;
+}
+
+main.hospital-light-workspace
+.recharts-cartesian-grid-horizontal line {
+  stroke: #e1edf3 !important;
+}
+
+main.hospital-light-workspace
+.recharts-cartesian-axis-tick-value {
+  fill: #8298aa !important;
+}
+
+
+/* ==========================================================
+   STATUS COLORS
+   ========================================================== */
+
+main.hospital-light-workspace
+.text-emerald-400,
+main.hospital-light-workspace
+.text-emerald-500 {
+  color: #159570 !important;
+}
+
+main.hospital-light-workspace
+.text-amber-400,
+main.hospital-light-workspace
+.text-amber-500 {
+  color: #d58a18 !important;
+}
+
+main.hospital-light-workspace
+.text-rose-400,
+main.hospital-light-workspace
+.text-rose-500 {
+  color: #d84b5b !important;
+}
+
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+
+@media (max-width: 700px) {
+
+  .department-actions,
+  .doctor-actions {
+    width: 100% !important;
+    justify-content: stretch !important;
+  }
+
+  .department-actions button,
+  .doctor-actions button {
+    flex: 1 1 auto !important;
+  }
+}
+
+
+/* =========================================================
+   TARGETED FIX - DEPARTMENTS ACTIONS
+   ========================================================= */
+
+.department-actions {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 12px !important;
+    flex-wrap: nowrap !important;
+}
+
+.department-actions button {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: max-content !important;
+    white-space: nowrap !important;
+}
+
+
+/* =========================================================
+   TARGETED FIX - DOCTORS ACTIONS
+   ========================================================= */
+
+.doctor-actions {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 12px !important;
+    flex-wrap: nowrap !important;
+}
+
+.doctor-actions button {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: max-content !important;
+    white-space: nowrap !important;
+}
+
+
+/* =========================================================
+   DOCTOR / DEPARTMENT MODAL
+   VIEWPORT SAFE
+   ========================================================= */
+
+/*
+   Problem:
+   Large Add Doctor form is taller than the browser viewport.
+   When centered normally, its upper portion can move outside
+   the viewport.
+
+   Fix:
+   Keep the overlay scrollable and constrain the modal itself.
+*/
+
+body .fixed.inset-0 {
+    box-sizing: border-box !important;
+    padding: 16px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+
+/* Main modal surface */
+
+body .fixed.inset-0 > div {
+    box-sizing: border-box !important;
+
+    width: min(100%, 1120px) !important;
+
+    max-height: calc(100vh - 32px) !important;
+
+    margin-top: auto !important;
+    margin-bottom: auto !important;
+
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+
+    overscroll-behavior: contain !important;
+
+    -webkit-overflow-scrolling: touch !important;
+}
+
+
+/* Make form content fit comfortably */
+
+body .fixed.inset-0 form {
+    min-width: 0 !important;
+}
+
+
+/* Prevent huge fields from causing horizontal overflow */
+
+body .fixed.inset-0 input,
+body .fixed.inset-0 textarea,
+body .fixed.inset-0 select {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+
+/* =========================================================
+   MOBILE MODAL
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    body .fixed.inset-0 {
+        padding: 10px !important;
+        align-items: flex-start !important;
+    }
+
+    body .fixed.inset-0 > div {
+        width: 100% !important;
+        max-height: calc(100vh - 20px) !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+    .department-actions,
+    .doctor-actions {
+        width: 100% !important;
+        flex-wrap: wrap !important;
+        justify-content: flex-end !important;
+    }
+}
+
+
+/* =========================================================
+   DESKTOP - BUTTONS NEVER STACK
+   ========================================================= */
+
+@media (min-width: 769px) {
+
+    .department-actions,
+    .doctor-actions {
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+    }
+}
+
+
+/* ============================================================
+   SANJEEVNI TECH - FINAL REQUESTED UI FIX
+   CSS ONLY
+   ============================================================ */
+
+
+/* ============================================================
+   1. DEPARTMENTS
+   REFRESH + ADD DEPARTMENT MUST BE SIDE BY SIDE
+   ============================================================ */
+
+/*
+   Departments header structure:
+   page header
+      -> title section
+      -> action section
+           -> Refresh
+           -> Add Department
+
+   We target the LAST child of the header rather than modifying
+   JSX, so existing React/API behaviour remains untouched.
+*/
+
+main.hospital-light-workspace
+> div
+> div.mb-7
+> div:last-child {
+
+    display: flex !important;
+
+    flex-direction: row !important;
+
+    align-items: center !important;
+
+    justify-content: flex-end !important;
+
+    gap: 12px !important;
+
+    flex-wrap: nowrap !important;
+
+    width: auto !important;
+}
+
+
+/* Buttons inside the Departments header */
+
+main.hospital-light-workspace
+> div
+> div.mb-7
+> div:last-child
+> button {
+
+    flex: 0 0 auto !important;
+
+    width: auto !important;
+
+    min-width: max-content !important;
+
+    white-space: nowrap !important;
+
+    display: inline-flex !important;
+
+    flex-direction: row !important;
+
+    align-items: center !important;
+
+    justify-content: center !important;
+}
+
+
+/* ============================================================
+   2. DOCTORS
+   KEEP REFRESH + ADD DOCTOR ALIGNED
+   ============================================================ */
+
+main.hospital-light-workspace
+> div
+> div.mb-7
+> div:last-child {
+
+    display: flex !important;
+
+    flex-direction: row !important;
+
+    align-items: center !important;
+
+    gap: 12px !important;
+}
+
+
+/* ============================================================
+   3. ADD DOCTOR MODAL
+   HEADER MUST NEVER GET CUT
+   FORM MUST SCROLL INTERNALLY
+   ============================================================ */
+
+/*
+   The modal itself stays inside the browser viewport.
+*/
+
+body .fixed.inset-0 {
+
+    box-sizing: border-box !important;
+
+    padding: 16px !important;
+
+    overflow-y: auto !important;
+
+    overflow-x: hidden !important;
+
+    align-items: center !important;
+
+    justify-content: center !important;
+}
+
+
+/*
+   Modal surface.
+*/
+
+body .fixed.inset-0 > div {
+
+    box-sizing: border-box !important;
+
+    max-height: calc(100vh - 32px) !important;
+
+    overflow: hidden !important;
+
+    min-height: 0 !important;
+
+    flex-shrink: 1 !important;
+}
+
+
+/*
+   THIS is the important part.
+
+   The Add Doctor <form> becomes the scrollable area.
+
+   Header remains visible.
+   Form content can scroll.
+   Footer remains reachable.
+*/
+
+body .fixed.inset-0 form {
+
+    min-height: 0 !important;
+
+    max-height: calc(100vh - 180px) !important;
+
+    overflow-y: auto !important;
+
+    overflow-x: hidden !important;
+
+    scrollbar-width: thin !important;
+
+    scrollbar-color: #a9bfcc transparent !important;
+
+    padding-right: 6px !important;
+}
+
+
+/* Chrome / Edge scrollbar */
+
+body .fixed.inset-0 form::-webkit-scrollbar {
+
+    width: 7px !important;
+}
+
+body .fixed.inset-0 form::-webkit-scrollbar-track {
+
+    background: transparent !important;
+}
+
+body .fixed.inset-0 form::-webkit-scrollbar-thumb {
+
+    background: #a9bfcc !important;
+
+    border-radius: 20px !important;
+}
+
+
+/* ============================================================
+   4. ALL INPUT EXAMPLE / PLACEHOLDER TEXT
+   MAKE IT LIGHTER
+   ============================================================ */
+
+/*
+   These are examples only:
+   Existing user ID
+   Department ID
+   DOC-001
+   Medical registration
+   Cardiology
+   MBBS, MD
+   Professional biography...
+*/
+
+body input::placeholder,
+body textarea::placeholder {
+
+    color: #a4b7c3 !important;
+
+    opacity: 1 !important;
+
+    font-weight: 500 !important;
+}
+
+
+/* Firefox */
+
+body input::-moz-placeholder,
+body textarea::-moz-placeholder {
+
+    color: #a4b7c3 !important;
+
+    opacity: 1 !important;
+
+    font-weight: 500 !important;
+}
+
+
+/* Chrome / Edge */
+
+body input::-webkit-input-placeholder,
+body textarea::-webkit-input-placeholder {
+
+    color: #a4b7c3 !important;
+
+    opacity: 1 !important;
+
+    font-weight: 500 !important;
+}
+
+
+/* ============================================================
+   5. DO NOT MAKE ACTUAL ENTERED TEXT LIGHT
+   ============================================================ */
+
+body input:not(:placeholder-shown),
+body textarea:not(:placeholder-shown) {
+
+    color: #153653 !important;
+
+    opacity: 1 !important;
+}
+
+
+/* ============================================================
+   6. DATE / NUMBER INPUTS
+   REAL VALUES STAY DARK
+   ============================================================ */
+
+body input[type="date"],
+body input[type="number"] {
+
+    color: #153653 !important;
+
+    opacity: 1 !important;
+}
+
+
+/* ============================================================
+   7. MOBILE
+   ============================================================ */
+
+@media (max-width: 768px) {
+
+    main.hospital-light-workspace
+    > div
+    > div.mb-7
+    > div:last-child {
+
+        width: 100% !important;
+
+        flex-wrap: wrap !important;
+
+        justify-content: flex-end !important;
+    }
+
+
+    main.hospital-light-workspace
+    > div
+    > div.mb-7
+    > div:last-child
+    > button {
+
+        flex: 0 0 auto !important;
+    }
+
+
+    body .fixed.inset-0 {
+
+        padding: 10px !important;
+
+        align-items: flex-start !important;
+    }
+
+
+    body .fixed.inset-0 > div {
+
+        max-height: calc(100vh - 20px) !important;
+
+        width: 100% !important;
+    }
+
+
+    body .fixed.inset-0 form {
+
+        max-height: calc(100vh - 150px) !important;
+    }
+}
+
+
+/* ============================================================
+   8. DESKTOP
+   ============================================================ */
+
+@media (min-width: 769px) {
+
+    main.hospital-light-workspace
+    > div
+    > div.mb-7
+    > div:last-child {
+
+        flex-direction: row !important;
+
+        flex-wrap: nowrap !important;
+
+        align-items: center !important;
+    }
+}
+
+
+/* ============================================================
+   FORCE DEPARTMENT / DOCTOR HEADER BUTTON ALIGNMENT
+   ============================================================ */
+
+/*
+   The previous selectors depended on the wrapper class.
+   This selector intentionally does NOT.
+
+   :has(> button + button)
+   = a container having two adjacent direct buttons.
+*/
+
+main.hospital-light-workspace
+div:has(> button + button) {
+
+    display: flex !important;
+
+    flex-direction: row !important;
+
+    align-items: center !important;
+
+    justify-content: flex-end !important;
+
+    gap: 12px !important;
+
+    flex-wrap: nowrap !important;
+
+    width: auto !important;
+}
+
+
+/* Every direct button stays its own natural width */
+
+main.hospital-light-workspace
+div:has(> button + button)
+> button {
+
+    display: inline-flex !important;
+
+    flex: 0 0 auto !important;
+
+    flex-direction: row !important;
+
+    align-items: center !important;
+
+    justify-content: center !important;
+
+    width: auto !important;
+
+    min-width: max-content !important;
+
+    white-space: nowrap !important;
+
+    margin: 0 !important;
+}
+
+
+/* ============================================================
+   DESKTOP
+   ============================================================ */
+
+@media (min-width: 769px) {
+
+    main.hospital-light-workspace
+    div:has(> button + button) {
+
+        flex-direction: row !important;
+
+        align-items: center !important;
+
+        justify-content: flex-end !important;
+
+        flex-wrap: nowrap !important;
+    }
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 768px) {
+
+    main.hospital-light-workspace
+    div:has(> button + button) {
+
+        flex-direction: row !important;
+
+        align-items: center !important;
+
+        justify-content: flex-end !important;
+
+        gap: 8px !important;
+
+        flex-wrap: wrap !important;
+    }
+}
+
+
+/* ============================================================
+   EXTRA FORCE FOR DEPARTMENT / DOCTOR ACTION CLASSES
+   ============================================================ */
+
+.department-actions,
+.doctor-actions {
+
+    display: flex !important;
+
+    flex-direction: row !important;
+
+    align-items: center !important;
+
+    justify-content: flex-end !important;
+
+    gap: 12px !important;
+
+    flex-wrap: nowrap !important;
+}
+
+
+.department-actions > button,
+.doctor-actions > button {
+
+    display: inline-flex !important;
+
+    flex: 0 0 auto !important;
+
+    width: auto !important;
+
+    min-width: max-content !important;
+
+    margin: 0 !important;
+
+    white-space: nowrap !important;
+}
+
+
+/* ============================================================
+   IMPORTANT:
+   Don't let Tailwind's flex-col win.
+   ============================================================ */
+
+main.hospital-light-workspace
+.flex-col:has(> button + button) {
+
+    flex-direction: row !important;
+}
+
+
+/* ============================================================
+   BUTTON HEIGHT CONSISTENCY
+   ============================================================ */
+
+main.hospital-light-workspace
+div:has(> button + button)
+> button {
+
+    min-height: 46px !important;
+
+    height: 46px !important;
+}
+
+/* Quick Actions card must NEVER create a horizontal row */
+main .lab-quick-actions {
+    display: flex !important;
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    gap: 12px !important;
+    margin-top: 20px !important;
+    overflow: visible !important;
+}
+
+/* Every Quick Action occupies one complete row */
+main .lab-quick-actions .lab-quick-action-button {
+    display: flex !important;
+    flex: 0 0 auto !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    height: 58px !important;
+
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+
+    padding: 0 16px !important;
+
+    border: 1px solid #dbe8ef !important;
+    border-radius: 14px !important;
+
+    background: #f8fbfd !important;
+    color: #153653 !important;
+
+    text-align: left !important;
+    white-space: nowrap !important;
+
+    transition:
+        background 160ms ease,
+        border-color 160ms ease,
+        box-shadow 160ms ease,
+        transform 160ms ease !important;
+}
+
+main .lab-quick-actions .lab-quick-action-button:hover {
+    background: #eefbfe !important;
+    border-color: #9ddfea !important;
+    box-shadow: 0 6px 18px rgba(8, 185, 216, 0.08) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Keep icon and text inside the button */
+main .lab-quick-actions .lab-quick-action-button > span {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+}
+
+main .lab-quick-actions .lab-quick-action-button > span > span {
+    flex: 0 0 auto !important;
+}
+
+/* Icon container */
+main .lab-quick-actions .lab-quick-action-button > span > span:first-child {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: 38px !important;
+    height: 38px !important;
+    flex: 0 0 38px !important;
+
+    border-radius: 11px !important;
+
+    background: #ffffff !important;
+    color: #08a9c8 !important;
+
+    box-shadow: 0 2px 8px rgba(21, 54, 83, 0.08) !important;
+}
+
+/* Action text */
+main .lab-quick-actions .lab-quick-action-button
+> span
+> span:last-child {
+    min-width: 0 !important;
+
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+
+    color: #153653 !important;
+    font-size: 14px !important;
+    font-weight: 650 !important;
+}
+
+/* Chevron */
+main .lab-quick-actions .lab-quick-action-button svg:last-child {
+    flex: 0 0 auto !important;
+    margin-left: 12px !important;
+    color: #8298aa !important;
+}
+
+/* Quick Actions card itself */
+main .lab-quick-actions {
+    position: relative !important;
+}
+
+/* Prevent the overview lower grid from squeezing children */
+main .lab-quick-actions,
+main .lab-quick-actions * {
+    box-sizing: border-box !important;
+}
+
+/* Desktop right-side card */
+@media (min-width: 1280px) {
+    main .lab-quick-actions {
+        width: 100% !important;
+    }
+
+    main .lab-quick-actions .lab-quick-action-button {
+        width: 100% !important;
+    }
+}
+
+/* Tablet/mobile */
+@media (max-width: 1279px) {
+    main .lab-quick-actions .lab-quick-action-button {
+        height: 56px !important;
+    }
+}
+
+/* Small screens */
+@media (max-width: 640px) {
+    main .lab-quick-actions {
+        gap: 10px !important;
+    }
+
+    main .lab-quick-actions .lab-quick-action-button {
+        height: 54px !important;
+        padding: 0 13px !important;
+    }
+}
+
+/* ============================================================
+   LABORATORY OVERVIEW GRID SAFETY
+   ============================================================ */
+
+main .lab-overview-lower-grid {
+    min-width: 0 !important;
+    width: 100% !important;
+}
+
+main .lab-overview-lower-grid > * {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* ================================================================
+   SANJEEVNI TECH - LABORATORY QUICK ACTIONS
+   FINAL STRUCTURAL FIX
+   ================================================================ */
+
+/*
+   IMPORTANT:
+   Laboratory.jsx is intentionally NOT modified.
+   This targets the existing Quick Actions card directly.
+*/
+
+
+/* ------------------------------------------------
+   RIGHT-SIDE CARD
+   ------------------------------------------------ */
+
+main .grid.xl\:grid-cols-3 > :nth-child(2):has(button) {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+
+    overflow: hidden !important;
+
+    box-sizing: border-box !important;
+}
+
+
+/* ------------------------------------------------
+   FIND THE ACTIONS AREA INSIDE RIGHT CARD
+   ------------------------------------------------ */
+
+/*
+   Any direct child containing the action buttons
+   becomes a vertical stack.
+*/
+
+main .grid.xl\:grid-cols-3 > :nth-child(2):has(button)
+    div:has(> button) {
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    flex-wrap: nowrap !important;
+
+    align-items: stretch !important;
+
+    justify-content: flex-start !important;
+
+    gap: 12px !important;
+
+    width: 100% !important;
+
+    max-width: 100% !important;
+
+    min-width: 0 !important;
+
+    margin-left: 0 !important;
+
+    margin-right: 0 !important;
+
+    box-sizing: border-box !important;
+
+    overflow: visible !important;
+}
+
+
+/* ------------------------------------------------
+   QUICK ACTION BUTTONS
+   ------------------------------------------------ */
+
+main .grid.xl\:grid-cols-3 > :nth-child(2):has(button)
+    div:has(> button) > button {
+
+    display: flex !important;
+
+    flex-direction: row !important;
+
+    align-items: center !important;
+
+    justify-content: space-between !important;
+
+    flex: 0 0 auto !important;
+
+    width: 100% !important;
+
+    max-width: 100% !important;
+
+    min-width: 0 !important;
+
+    height: 58px !important;
+
+    margin: 0 !important;
+
+    padding: 0 15px !important;
+
+    box-sizing: border-box !important;
+
+    overflow: hidden !important;
+
+    white-space: nowrap !important;
+
+    border-radius: 14px !important;
+
+    border: 1px solid #dbe8ef !important;
+
+    background: #f8fbfd !important;
+
+    color: #153653 !important;
+
+    text-align: left !important;
+
+}
+
+
+/* ------------------------------------------------
+   REMOVE HORIZONTAL TRANSFORM / POSITION ISSUES
+   ------------------------------------------------ */
+
+main .grid.xl\:grid-cols-3 > :nth-child(2):has(button)
+    button {
+
+    left: auto !important;
+
+    right: auto !important;
+
+    top: auto !important;
+
+    bottom: auto !important;
+
+    transform: none !important;
+
+}
+
+
+/* ------------------------------------------------
+   BUTTON HOVER
+   ------------------------------------------------ */
+
+main .grid.xl\:grid-cols-3 > :nth-child(2):has(button)
+    div:has(> button) > button:hover {
+
+    background: #eefbfe !important;
+
+    border-color: #9edfea !important;
+
+    box-shadow: 0 7px 20px rgba(8,185,216,0.10) !important;
+
+}
+
+
+/* ------------------------------------------------
+   BUTTON INTERNAL CONTENT
+   ------------------------------------------------ */
+
+main .grid.xl\:grid-cols-3 > :nth-child(2):has(button)
+    button > * {
+
+    min-width: 0 !important;
+
+    box-sizing: border-box !important;
+}
+
+
+/* ------------------------------------------------
+   TEXT MUST NOT PUSH BUTTON OUT
+   ------------------------------------------------ */
+
+main .grid.xl\:grid-cols-3 > :nth-child(2):has(button)
+    button span {
+
+    min-width: 0 !important;
+
+    max-width: 100% !important;
+
+    overflow: hidden !important;
+
+    text-overflow: ellipsis !important;
+
+    white-space: nowrap !important;
+
+    color: #153653 !important;
+}
+
+
+/* ------------------------------------------------
+   ICONS
+   ------------------------------------------------ */
+
+main .grid.xl\:grid-cols-3 > :nth-child(2):has(button)
+    button svg {
+
+    flex: 0 0 auto !important;
+}
+
+
+/* ------------------------------------------------
+   STOP PARENT GRID/FLEX FROM SQUEEZING ACTIONS
+   ------------------------------------------------ */
+
+main .grid.xl\:grid-cols-3 > :nth-child(2):has(button)
+    div {
+
+    min-width: 0 !important;
+
+    box-sizing: border-box !important;
+}
+
+
+/* ------------------------------------------------
+   EXTRA SAFETY:
+   RIGHT CARD CAN NEVER HAVE HORIZONTAL SCROLL
+   ------------------------------------------------ */
+
+main .grid.xl\:grid-cols-3 > :nth-child(2):has(button) {
+    overflow-x: hidden !important;
+
+    overflow-y: visible !important;
+}
+
+
+/* ------------------------------------------------
+   RESPONSIVE
+   ------------------------------------------------ */
+
+@media (max-width: 1279px) {
+
+    main .grid.xl\:grid-cols-3 > :nth-child(2):has(button) {
+        width: 100% !important;
+    }
+
+}
+
+
+@media (max-width: 640px) {
+
+    main .grid.xl\:grid-cols-3 > :nth-child(2):has(button)
+        div:has(> button) {
+
+        gap: 10px !important;
+    }
+
+    main .grid.xl\:grid-cols-3 > :nth-child(2):has(button)
+        div:has(> button) > button {
+
+        height: 54px !important;
+
+        padding-left: 13px !important;
+
+        padding-right: 13px !important;
+    }
+
+}
+
+/* ================================================================
+   SANJEEVNI TECH - LABORATORY TAB NAVIGATION
+   FINAL CENTER ALIGNMENT
+   ================================================================ */
+
+/*
+   Laboratory has exactly five primary navigation tabs:
+   Overview
+   Laboratories
+   Lab Tests
+   Samples
+   Reports
+
+   Keep the complete group visually centered.
+*/
+
+
+/* ------------------------------------------------
+   TAB CONTAINER
+   Detect the container that directly owns five
+   navigation buttons.
+   ------------------------------------------------ */
+
+main div:has(> button:nth-child(5)):not(:has(> button:nth-child(6))) {
+
+    display: flex !important;
+
+    align-items: center !important;
+
+    justify-content: center !important;
+
+    flex-direction: row !important;
+
+    flex-wrap: nowrap !important;
+
+    width: 100% !important;
+
+    max-width: 100% !important;
+
+    min-width: 0 !important;
+
+    margin-left: auto !important;
+
+    margin-right: auto !important;
+
+    box-sizing: border-box !important;
+
+    overflow: hidden !important;
+}
+
+
+/* ------------------------------------------------
+   FIVE TAB BUTTONS
+   ------------------------------------------------ */
+
+main div:has(> button:nth-child(5)):not(:has(> button:nth-child(6)))
+    > button {
+
+    flex: 0 0 auto !important;
+
+    width: auto !important;
+
+    min-width: 150px !important;
+
+    max-width: 220px !important;
+
+    margin-left: 0 !important;
+
+    margin-right: 0 !important;
+
+    box-sizing: border-box !important;
+
+    justify-content: center !important;
+
+    text-align: center !important;
+}
+
+
+/* ------------------------------------------------
+   EVEN SPACING
+   ------------------------------------------------ */
+
+main div:has(> button:nth-child(5)):not(:has(> button:nth-child(6))) {
+
+    gap: 8px !important;
+
+    padding-left: 8px !important;
+
+    padding-right: 8px !important;
+}
+
+
+/* ------------------------------------------------
+   ICON + TEXT INSIDE TABS
+   ------------------------------------------------ */
+
+main div:has(> button:nth-child(5)):not(:has(> button:nth-child(6)))
+    > button {
+
+    display: inline-flex !important;
+
+    align-items: center !important;
+
+    justify-content: center !important;
+
+    gap: 10px !important;
+
+    white-space: nowrap !important;
+}
+
+
+/* ------------------------------------------------
+   ACTIVE TAB
+   ------------------------------------------------ */
+
+main div:has(> button:nth-child(5)):not(:has(> button:nth-child(6)))
+    > button:first-child {
+
+    justify-content: center !important;
+}
+
+
+/* ------------------------------------------------
+   LARGE DESKTOP
+   ------------------------------------------------ */
+
+@media (min-width: 1440px) {
+
+    main div:has(> button:nth-child(5)):not(:has(> button:nth-child(6)))
+        > button {
+
+        min-width: 155px !important;
+    }
+
+}
+
+
+/* ------------------------------------------------
+   LAPTOP
+   ------------------------------------------------ */
+
+@media (max-width: 1279px) {
+
+    main div:has(> button:nth-child(5)):not(:has(> button:nth-child(6)))
+        > button {
+
+        min-width: 125px !important;
+
+        padding-left: 14px !important;
+
+        padding-right: 14px !important;
+    }
+
+}
+
+
+/* ------------------------------------------------
+   SMALL SCREEN
+   ------------------------------------------------ */
+
+@media (max-width: 800px) {
+
+    main div:has(> button:nth-child(5)):not(:has(> button:nth-child(6))) {
+
+        gap: 4px !important;
+
+        overflow-x: auto !important;
+
+        justify-content: center !important;
+
+        scrollbar-width: none !important;
+    }
+
+    main div:has(> button:nth-child(5)):not(:has(> button:nth-child(6)))::-webkit-scrollbar {
+
+        display: none !important;
+    }
+
+    main div:has(> button:nth-child(5)):not(:has(> button:nth-child(6)))
+        > button {
+
+        min-width: 115px !important;
+    }
+
+}
+
+
+/* Sanjeevni Tech — Nurse portal, aligned with Laboratory Test Results */
+.nurse-lab-theme {
+  color: #17233b;
+  color-scheme: light;
+}
+.nurse-lab-theme h1,
+.nurse-lab-theme h2,
+.nurse-lab-theme h3 {
+  color: #14213d !important;
+}
+.nurse-lab-theme p,
+.nurse-lab-theme label,
+.nurse-lab-theme td,
+.nurse-lab-theme th,
+.nurse-lab-theme span {
+  text-shadow: none;
+}
+.nurse-lab-theme > div:first-child,
+.nurse-lab-theme > header:first-child {
+  box-sizing: border-box;
+  border-radius: 24px;
+  padding: 28px 32px;
+  background: linear-gradient(115deg, #101a33 0%, #172c55 55%, #0e5667 100%);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, .12);
+}
+.nurse-lab-theme > div:first-child h1,
+.nurse-lab-theme > header:first-child h1 {
+  color: #ffffff !important;
+  font-size: clamp(1.8rem, 3vw, 2.35rem);
+  font-weight: 800;
+  letter-spacing: -.025em;
+}
+.nurse-lab-theme > div:first-child p,
+.nurse-lab-theme > header:first-child p {
+  color: #dbeafe !important;
+}
+.nurse-lab-theme > div:first-child p:first-child,
+.nurse-lab-theme > header:first-child p:first-child {
+  color: #67e8f9 !important;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.nurse-lab-theme > div:first-child button,
+.nurse-lab-theme > header:first-child button {
+  border-color: rgba(255,255,255,.24);
+  color: #ffffff;
+}
+.nurse-lab-theme > div:first-child button:hover,
+.nurse-lab-theme > header:first-child button:hover {
+  background-color: rgba(255,255,255,.12);
+}
+
+/* Convert old dark-mode cards to clean white Laboratory-style cards. */
+.nurse-lab-theme .dark\:bg-slate-900,
+.nurse-lab-theme .dark\:bg-slate-800,
+.nurse-lab-theme .dark\:bg-slate-800\/60,
+.nurse-lab-theme .dark\:bg-slate-800\/70 {
+  background-color: #ffffff !important;
+}
+.nurse-lab-theme .dark\:text-white,
+.nurse-lab-theme .dark\:text-slate-200,
+.nurse-lab-theme .dark\:text-slate-300 {
+  color: #24334d !important;
+}
+.nurse-lab-theme .dark\:border-slate-800,
+.nurse-lab-theme .dark\:border-slate-700 {
+  border-color: #dce5ef !important;
+}
+.nurse-lab-theme section,
+.nurse-lab-theme form,
+.nurse-lab-theme > div:not(:first-child) {
+  color: #24334d;
+}
+.nurse-lab-theme section,
+.nurse-lab-theme form {
+  border-color: #dce5ef;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, .035);
+}
+.nurse-lab-theme input,
+.nurse-lab-theme select,
+.nurse-lab-theme textarea {
+  color: #17233b !important;
+  background-color: #ffffff !important;
+  border-color: #cbd7e6 !important;
+}
+.nurse-lab-theme input::placeholder,
+.nurse-lab-theme textarea::placeholder {
+  color: #8292a8 !important;
+  opacity: 1;
+}
+.nurse-lab-theme select option {
+  color: #17233b;
+  background: #ffffff;
+}
+.nurse-lab-theme table thead {
+  background-color: #f3f7fb !important;
+}
+.nurse-lab-theme table th {
+  color: #52647e !important;
+}
+.nurse-lab-theme table tbody tr {
+  border-color: #e5ebf3 !important;
+}
+.nurse-lab-theme table tbody tr:hover {
+  background-color: #f7fbff;
+}
+.nurse-lab-theme button:focus-visible,
+.nurse-lab-theme input:focus-visible,
+.nurse-lab-theme select:focus-visible,
+.nurse-lab-theme textarea:focus-visible {
+  outline: 3px solid rgba(6, 182, 212, .35);
+  outline-offset: 2px;
+}
+.nurse-lab-theme button:disabled {
+  cursor: not-allowed;
+  opacity: .6;
+}
+.nurse-lab-theme button.bg-teal-700,
+.nurse-lab-theme button.bg-teal-600,
+.nurse-lab-theme button.bg-teal-800 {
+  background-color: #06b6d4 !important;
+  color: #082f49 !important;
+  border-color: #06b6d4 !important;
+}
+.nurse-lab-theme button.bg-teal-700:hover,
+.nurse-lab-theme button.bg-teal-600:hover,
+.nurse-lab-theme button.bg-teal-800:hover {
+  background-color: #22d3ee !important;
+}
+.nurse-lab-theme .dark\:bg-teal-950 {
+  background-color: #e6f9fc !important;
+}
+.nurse-lab-theme .dark\:text-teal-300 {
+  color: #087e96 !important;
+}
+.nurse-lab-theme .dark\:text-slate-400 {
+  color: #64748b !important;
+}
+.nurse-lab-theme .dark\:divide-slate-800 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #e5ebf3 !important;
+}
+@media (max-width: 640px) {
+  .nurse-lab-theme > div:first-child,
+  .nurse-lab-theme > header:first-child {
+    padding: 22px 18px;
+    border-radius: 18px;
+  }
+}

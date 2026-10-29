@@ -1,0 +1,110 @@
+﻿# Environment variables and secrets
+.env
+.env.*
+!.env.example
+!**/.env.example
+
+# Python virtual environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Frontend dependencies and build output
+node_modules/
+dist/
+coverage/
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Database dumps and local database files
+*.dump
+*.sql.gz
+*.sqlite
+*.sqlite3
+
+# Local backups and diagnostic archives
+backups/
+*-backup*/
+backup_*/
+*_audit_bundle/
+nurse-audit-bundle/
+nurse_audit_bundle/
+*.bak
+*.bak.*
+*.fixbackup_*
+*.importfix_*
+
+# Local editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Hospital demo credentials and credential exports
+*credentials*.csv
+*_credentials.csv
+
+# Local database exports and sensitive data
+*.dump
+*.bak
+*.bak.*
+*.fixbackup_*
+*.importfix_*
+
+# Temporary repair and diagnostic bundles
+admin-repair-preflight_*/
+backup-*/
+*-backup*/
+backup_*/
+*_audit_bundle/
+nurse-audit-bundle/
+nurse_audit_bundle/
+Sanjeevni_Patients_Module_Patch/
+nurse-module-consolidated-fix/
+sanjeevni-receptionist-integration-patch/
+sanjeevni_nurse_patch/
+doctor-name-fix-source/
+doctor-name-fix-source.zip
+admin-repair-preflight_*/
+build_debug_bundle.py
+apply_staff_diagnostic_logging.py
+Apply-NurseFix.ps1
+Apply-NursePatch.ps1
+APPLY_PATIENTS_PATCH.ps1
+doctor-medical-records-source.txt
+
+# Specific obsolete Login backup
+/frontend/src/pages/auth/Login.jsx.before_auth_fix_20261006_095625
+
+# Historical source-file backups; keep the real application files
+*.backup
+*.backup-*
+*.backup_*
+*.before-*
+*.before_*
+*.FINAL_BACKUP
+*.syntax-backup-*
+frontend/_ui_backup/
+backend/staff_email_backup_*.csv
+
+# Root-level historical or diagnostic files not part of the live app
+/RoleModulePage.jsx
+/doctor-medical-records-source.txt
+/build_debug_bundle.py
+/apply_staff_diagnostic_logging.py
+/backend/final_backend_audit.ps1
+/backend/audit_patient_link.py
+/backend/audit_patient_portal_fix.py
+/backend/audit_patient_registration.py
+
+# Historical source backups - keep local, exclude from GitHub
+*.bak
+*.bak.*
+*.bak-*
+*.bak_*
+*.current_broken_*

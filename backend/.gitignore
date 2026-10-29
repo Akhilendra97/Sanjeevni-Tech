@@ -1,0 +1,78 @@
+﻿# ============================================
+# SANJEEVNI TECH BACKEND - GITIGNORE
+# ============================================
+
+# Environment / Secrets
+.env
+.env.*
+!.env.example
+
+# Python virtual environment
+.venv/
+venv/
+env/
+
+# Python cache / compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Testing / coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# Type checking / linting caches
+.mypy_cache/
+.pyright/
+.ruff_cache/
+
+# Build / distribution
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Local database / temporary database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Uploads / generated runtime files
+storage/uploads/
+storage/test_uploads/
+storage/test_reports/
+storage/tmp/
+
+# Generated reports / exports
+reports/generated/
+exports/
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local development files
+*.local
+
+# Python tooling
+pip-wheel-metadata/

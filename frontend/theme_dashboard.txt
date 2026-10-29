@@ -1,0 +1,946 @@
+import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+    Activity,
+    AlertTriangle,
+    BedDouble,
+    CalendarDays,
+    CheckCircle2,
+    Clock3,
+    FlaskConical,
+    HeartPulse,
+    Hospital,
+    LoaderCircle,
+    RefreshCw,
+    ShieldCheck,
+    Siren,
+    Stethoscope,
+    Users,
+} from "lucide-react";
+import {
+    Area,
+    AreaChart,
+    CartesianGrid,
+    ResponsiveContainer,
+    Tooltip,
+    XAxis,
+    YAxis,
+} from "recharts";
+
+import api from "../../services/api";
+
+function toNumber(value) {
+    const number = Number(value);
+    return Number.isFinite(number) ? number : 0;
+}
+
+function formatNumber(value) {
+    return new Intl.NumberFormat("en-IN").format(toNumber(value));
+}
+
+function normalizeAnalytics(response) {
+    // Supports both:
+    // response
+    // response.data
+    // response.data.data
+    const root =
+        response?.data?.data ??
+        response?.data ??
+        response ??
+        {};
+
+    return {
+        generatedAt: root.generated_at ?? null,
+
+        hospital: {
+            patients: toNumber(root.hospital?.patients),
+            doctors: toNumber(root.hospital?.doctors),
+            nurses: toNumber(root.hospital?.nurses),
+            staff: toNumber(root.hospital?.staff),
+            departments: toNumber(root.hospital?.departments),
+            wards: toNumber(root.hospital?.wards),
+        },
+
+        capacity: {
+            totalBeds: toNumber(root.capacity?.total_beds),
+            occupiedBeds: toNumber(root.capacity?.occupied_beds),
+            availableBeds: toNumber(root.capacity?.available_beds),
+            reservedBeds: toNumber(root.capacity?.reserved_beds),
+            maintenanceBeds: toNumber(root.capacity?.maintenance_beds),
+            occupancy: toNumber(root.capacity?.occupancy_percentage),
+        },
+
+        appointments: {
+            total: toNumber(root.appointments?.total),
+            today: toNumber(root.appointments?.today),
+            scheduled: toNumber(root.appointments?.scheduled),
+            confirmed: toNumber(root.appointments?.confirmed),
+            completed: toNumber(root.appointments?.completed),
+            cancelled: toNumber(root.appointments?.cancelled),
+            completion: toNumber(
+                root.appointments?.completion_percentage
+            ),
+        },
+
+        admissions: {
+            total: toNumber(root.patient_flow?.total_admissions),
+            active: toNumber(root.patient_flow?.active_admissions),
+            discharged: toNumber(
+                root.patient_flow?.discharged_admissions
+            ),
+        },
+
+        emergency: {
+            total: toNumber(root.emergency?.total_cases),
+            active: toNumber(root.emergency?.active_cases),
+            today: toNumber(root.emergency?.today_cases),
+            critical: toNumber(root.emergency?.critical_triage),
+            emergency: toNumber(root.emergency?.emergency_triage),
+            urgent: toNumber(root.emergency?.urgent_triage),
+        },
+
+        surgical: {
+            total: toNumber(
+                root.surgical_services?.total_surgeries
+            ),
+            scheduled: toNumber(
+                root.surgical_services?.scheduled
+            ),
+            completed: toNumber(
+                root.surgical_services?.completed
+            ),
+            theatres: toNumber(
+                root.surgical_services?.operation_theatres
+            ),
+            activeTheatres: toNumber(
+                root.surgical_services?.active_theatres
+            ),
+        },
+
+        clinical: {
+            prescriptions: toNumber(
+                root.clinical_services?.prescriptions
+            ),
+            todayPrescriptions: toNumber(
+                root.clinical_services?.today_prescriptions
+            ),
+            laboratoryTests: toNumber(
+                root.clinical_services?.laboratory_tests
+            ),
+            radiologyRecords: toNumber(
+                root.clinical_services?.radiology_records
+            ),
+        },
+
+        pharmacy: {
+            pharmacies: toNumber(
+                root.pharmacy_inventory?.pharmacies
+            ),
+            inventoryItems: toNumber(
+                root.pharmacy_inventory?.inventory_items
+            ),
+            lowStock: toNumber(
+                root.pharmacy_inventory?.low_stock_items
+            ),
+        },
+
+        financial: {
+            invoiceTotal: toNumber(
+                root.financial?.invoice_total
+            ),
+            invoicePaid: toNumber(
+                root.financial?.invoice_paid
+            ),
+            invoiceBalance: toNumber(
+                root.financial?.invoice_balance
+            ),
+            paymentCollection: toNumber(
+                root.financial?.payment_collection
+            ),
+        },
+
+        alerts: Array.isArray(root.alerts)
+            ? root.alerts
+            : [],
+    };
+}
+
+function StatCard({
+    icon: Icon,
+    label,
+    value,
+    detail,
+    tone = "cyan",
+}) {
+    const tones = {
+        cyan: "border-cyan-400/10 bg-cyan-400/[0.04] text-cyan-300",
+        blue: "border-blue-400/10 bg-blue-400/[0.04] text-blue-300",
+        violet:
+            "border-violet-400/10 bg-violet-400/[0.04] text-violet-300",
+        emerald:
+            "border-emerald-400/10 bg-emerald-400/[0.04] text-emerald-300",
+        amber:
+            "border-amber-400/10 bg-amber-400/[0.04] text-amber-300",
+        rose: "border-rose-400/10 bg-rose-400/[0.04] text-rose-300",
+    };
+
+    return (
+        <div className="group rounded-2xl border border-white/[0.07] bg-[#09111f]/80 p-5 transition duration-300 hover:-translate-y-0.5 hover:border-white/[0.12]">
+            <div className="flex items-start justify-between gap-4">
+                <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+                        {label}
+                    </p>
+
+                    <p className="mt-3 text-3xl font-bold tracking-tight text-white">
+                        {formatNumber(value)}
+                    </p>
+
+                    <p className="mt-2 text-xs text-slate-500">
+                        {detail}
+                    </p>
+                </div>
+
+                <div
+                    className={`rounded-xl border p-3 ${tones[tone] || tones.cyan}`}
+                >
+                    <Icon size={21} />
+                </div>
+            </div>
+        </div>
+    );
+}
+
+function SectionHeader({ icon: Icon, title, subtitle }) {
+    return (
+        <div className="mb-5 flex items-center gap-3">
+            <div className="rounded-xl border border-cyan-400/10 bg-cyan-400/[0.05] p-2.5 text-cyan-300">
+                <Icon size={18} />
+            </div>
+
+            <div>
+                <h2 className="text-sm font-semibold text-white">
+                    {title}
+                </h2>
+                <p className="text-xs text-slate-500">
+                    {subtitle}
+                </p>
+            </div>
+        </div>
+    );
+}
+
+export default function AdminDashboard() {
+    const [analytics, setAnalytics] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
+    const [error, setError] = useState("");
+
+    const loadAnalytics = useCallback(async (manual = false) => {
+        if (manual) {
+            setRefreshing(true);
+        }
+
+        try {
+            setError("");
+
+            const response = await api.get(
+                "/api/v1/analytics/overview"
+            );
+
+            setAnalytics(normalizeAnalytics(response));
+        } catch (requestError) {
+            console.error(
+                "Analytics overview failed:",
+                requestError
+            );
+
+            setError(
+                requestError?.userMessage ||
+                    "Unable to load live hospital analytics."
+            );
+        } finally {
+            setLoading(false);
+            setRefreshing(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        loadAnalytics();
+
+        const interval = window.setInterval(() => {
+            loadAnalytics();
+        }, 30000);
+
+        return () => window.clearInterval(interval);
+    }, [loadAnalytics]);
+
+    const today = useMemo(() => {
+        return new Intl.DateTimeFormat("en-IN", {
+            weekday: "long",
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+        }).format(new Date());
+    }, []);
+
+    const chartData = useMemo(() => {
+        if (!analytics) {
+            return [];
+        }
+
+        return [
+            {
+                name: "Patients",
+                value: analytics.hospital.patients,
+            },
+            {
+                name: "Doctors",
+                value: analytics.hospital.doctors,
+            },
+            {
+                name: "Appointments",
+                value: analytics.appointments.total,
+            },
+            {
+                name: "Admissions",
+                value: analytics.admissions.total,
+            },
+            {
+                name: "Emergency",
+                value: analytics.emergency.total,
+            },
+            {
+                name: "Surgeries",
+                value: analytics.surgical.total,
+            },
+        ];
+    }, [analytics]);
+
+    if (loading && !analytics) {
+        return (
+            <div className="flex min-h-[70vh] items-center justify-center">
+                <div className="flex items-center gap-3 rounded-2xl border border-white/[0.07] bg-white/[0.03] px-5 py-4 text-sm text-slate-400">
+                    <LoaderCircle
+                        size={18}
+                        className="animate-spin text-cyan-400"
+                    />
+                    Loading live hospital intelligence...
+                </div>
+            </div>
+        );
+    }
+
+    const data = analytics || {
+        hospital: {},
+        capacity: {},
+        appointments: {},
+        admissions: {},
+        emergency: {},
+        surgical: {},
+        clinical: {},
+        pharmacy: {},
+        financial: {},
+        alerts: [],
+    };
+
+    return (
+        <div className="min-h-full bg-[#030712] text-white">
+            <div className="mx-auto max-w-[1600px] space-y-6 p-5 lg:p-7">
+                {/* Header */}
+                <div className="flex flex-col justify-between gap-5 xl:flex-row xl:items-end">
+                    <div>
+                        <div className="mb-3 flex items-center gap-2">
+                            <span className="h-2 w-2 animate-pulse rounded-full bg-cyan-400" />
+                            <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-cyan-300">
+                                Hospital Command Center
+                            </span>
+                        </div>
+
+                        <h1 className="text-3xl font-bold tracking-tight text-white lg:text-4xl">
+                            Good day, Administrator.
+                        </h1>
+
+                        <p className="mt-2 text-sm text-slate-500">
+                            Real-time operational overview powered by
+                            your hospital database.
+                        </p>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                        <div className="rounded-xl border border-white/[0.07] bg-white/[0.03] px-4 py-3">
+                            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-600">
+                                Today
+                            </p>
+                            <p className="mt-1 text-sm text-slate-300">
+                                {today}
+                            </p>
+                        </div>
+
+                        <button
+                            type="button"
+                            onClick={() => loadAnalytics(true)}
+                            disabled={refreshing}
+                            className="flex items-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 py-3 text-sm font-medium text-slate-300 transition hover:border-cyan-400/20 hover:bg-cyan-400/[0.05] hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                            <RefreshCw
+                                size={17}
+                                className={
+                                    refreshing
+                                        ? "animate-spin"
+                                        : ""
+                                }
+                            />
+                            Refresh
+                        </button>
+                    </div>
+                </div>
+
+                {/* Live status */}
+                <div className="flex flex-col justify-between gap-4 rounded-2xl border border-cyan-400/10 bg-gradient-to-r from-cyan-400/[0.05] via-transparent to-blue-500/[0.04] p-5 md:flex-row md:items-center">
+                    <div className="flex items-center gap-4">
+                        <div className="rounded-xl border border-cyan-400/10 bg-cyan-400/[0.07] p-3 text-cyan-300">
+                            <HeartPulse size={23} />
+                        </div>
+
+                        <div>
+                            <h2 className="font-semibold text-white">
+                                Hospital systems
+                            </h2>
+                            <p className="mt-1 text-xs text-slate-500">
+                                Live database-connected operational
+                                monitoring
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 rounded-full border border-emerald-400/10 bg-emerald-400/[0.04] px-4 py-2 text-xs font-semibold text-emerald-300">
+                        <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                        LIVE DATABASE
+                    </div>
+                </div>
+
+                {error && (
+                    <div className="flex items-start gap-3 rounded-2xl border border-rose-400/15 bg-rose-400/[0.05] p-4 text-sm text-rose-300">
+                        <AlertTriangle
+                            size={18}
+                            className="mt-0.5 shrink-0"
+                        />
+                        <div>
+                            <p className="font-semibold">
+                                Live analytics unavailable
+                            </p>
+                            <p className="mt-1 text-xs text-rose-300/70">
+                                {error}
+                            </p>
+                        </div>
+                    </div>
+                )}
+
+                {/* Primary stats */}
+                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                    <StatCard
+                        icon={Users}
+                        label="Registered patients"
+                        value={data.hospital.patients}
+                        detail="Current database count"
+                        tone="cyan"
+                    />
+
+                    <StatCard
+                        icon={Stethoscope}
+                        label="Doctors"
+                        value={data.hospital.doctors}
+                        detail="Current database count"
+                        tone="blue"
+                    />
+
+                    <StatCard
+                        icon={CalendarDays}
+                        label="Appointments"
+                        value={data.appointments.total}
+                        detail={`${formatNumber(
+                            data.appointments.today
+                        )} scheduled today`}
+                        tone="violet"
+                    />
+
+                    <StatCard
+                        icon={BedDouble}
+                        label="Beds"
+                        value={data.capacity.totalBeds}
+                        detail={`${formatNumber(
+                            data.capacity.occupancy
+                        )}% occupancy`}
+                        tone="emerald"
+                    />
+                </div>
+
+                {/* Main content */}
+                <div className="grid gap-5 xl:grid-cols-[minmax(0,1.55fr)_minmax(320px,0.75fr)]">
+                    {/* Activity */}
+                    <div className="rounded-2xl border border-white/[0.07] bg-[#09111f]/75 p-5">
+                        <SectionHeader
+                            icon={Activity}
+                            title="Hospital activity"
+                            subtitle="Live database-backed operational volume"
+                        />
+
+                        <div className="h-[300px]">
+                            <ResponsiveContainer
+                                width="100%"
+                                height="100%"
+                            >
+                                <AreaChart
+                                    data={chartData}
+                                    margin={{
+                                        top: 10,
+                                        right: 10,
+                                        left: -20,
+                                        bottom: 0,
+                                    }}
+                                >
+                                    <defs>
+                                        <linearGradient
+                                            id="activityFill"
+                                            x1="0"
+                                            y1="0"
+                                            x2="0"
+                                            y2="1"
+                                        >
+                                            <stop
+                                                offset="0%"
+                                                stopColor="#22d3ee"
+                                                stopOpacity={0.25}
+                                            />
+                                            <stop
+                                                offset="100%"
+                                                stopColor="#22d3ee"
+                                                stopOpacity={0}
+                                            />
+                                        </linearGradient>
+                                    </defs>
+
+                                    <CartesianGrid
+                                        stroke="rgba(148,163,184,0.08)"
+                                        vertical={false}
+                                    />
+
+                                    <XAxis
+                                        dataKey="name"
+                                        tick={{
+                                            fill: "#64748b",
+                                            fontSize: 11,
+                                        }}
+                                        axisLine={false}
+                                        tickLine={false}
+                                    />
+
+                                    <YAxis
+                                        allowDecimals={false}
+                                        tick={{
+                                            fill: "#64748b",
+                                            fontSize: 11,
+                                        }}
+                                        axisLine={false}
+                                        tickLine={false}
+                                    />
+
+                                    <Tooltip
+                                        contentStyle={{
+                                            background:
+                                                "#0b1322",
+                                            border:
+                                                "1px solid rgba(255,255,255,0.08)",
+                                            borderRadius:
+                                                "12px",
+                                            color: "#fff",
+                                        }}
+                                    />
+
+                                    <Area
+                                        type="monotone"
+                                        dataKey="value"
+                                        stroke="#22d3ee"
+                                        strokeWidth={2}
+                                        fill="url(#activityFill)"
+                                    />
+                                </AreaChart>
+                            </ResponsiveContainer>
+                        </div>
+                    </div>
+
+                    {/* System status */}
+                    <div className="rounded-2xl border border-white/[0.07] bg-[#09111f]/75 p-5">
+                        <SectionHeader
+                            icon={ShieldCheck}
+                            title="System status"
+                            subtitle="Current hospital platform health"
+                        />
+
+                        <div className="space-y-3">
+                            {[
+                                [
+                                    Hospital,
+                                    "Core platform",
+                                    "Hospital management API",
+                                    "Online",
+                                ],
+                                [
+                                    Stethoscope,
+                                    "Clinical services",
+                                    "Patient care workflows",
+                                    "Available",
+                                ],
+                                [
+                                    FlaskConical,
+                                    "Analytics",
+                                    "Live database intelligence",
+                                    "Connected",
+                                ],
+                                [
+                                    RefreshCw,
+                                    "Data refresh",
+                                    "Automatic dashboard refresh",
+                                    "30 sec",
+                                ],
+                            ].map(
+                                (
+                                    [
+                                        Icon,
+                                        title,
+                                        subtitle,
+                                        status,
+                                    ],
+                                    index
+                                ) => (
+                                    <div
+                                        key={title}
+                                        className="flex items-center justify-between rounded-xl border border-white/[0.06] bg-white/[0.02] p-4"
+                                    >
+                                        <div className="flex items-center gap-3">
+                                            <div className="rounded-lg bg-white/[0.04] p-2.5 text-slate-400">
+                                                <Icon size={18} />
+                                            </div>
+
+                                            <div>
+                                                <p className="text-sm font-semibold text-slate-200">
+                                                    {title}
+                                                </p>
+                                                <p className="mt-1 text-[11px] text-slate-600">
+                                                    {subtitle}
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div className="text-right">
+                                            <p className="text-sm font-semibold text-slate-300">
+                                                {status}
+                                            </p>
+                                            <p className="mt-1 flex items-center justify-end gap-1 text-[10px] text-emerald-400">
+                                                <CheckCircle2
+                                                    size={12}
+                                                />
+                                                Operational
+                                            </p>
+                                        </div>
+                                    </div>
+                                )
+                            )}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Clinical operations */}
+                <div className="rounded-2xl border border-white/[0.07] bg-[#09111f]/75 p-5">
+                    <SectionHeader
+                        icon={Activity}
+                        title="Clinical operations"
+                        subtitle="Live counts from the hospital database"
+                    />
+
+                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                        <StatCard
+                            icon={Hospital}
+                            label="Admissions"
+                            value={data.admissions.total}
+                            detail={`${formatNumber(
+                                data.admissions.active
+                            )} currently active`}
+                            tone="blue"
+                        />
+
+                        <StatCard
+                            icon={Siren}
+                            label="Emergency cases"
+                            value={data.emergency.total}
+                            detail={`${formatNumber(
+                                data.emergency.active
+                            )} currently active`}
+                            tone="rose"
+                        />
+
+                        <StatCard
+                            icon={Activity}
+                            label="Surgeries"
+                            value={data.surgical.total}
+                            detail={`${formatNumber(
+                                data.surgical.scheduled
+                            )} scheduled`}
+                            tone="violet"
+                        />
+
+                        <StatCard
+                            icon={FlaskConical}
+                            label="Laboratory tests"
+                            value={data.clinical.laboratoryTests}
+                            detail={`${formatNumber(
+                                data.clinical.prescriptions
+                            )} prescriptions`}
+                            tone="cyan"
+                        />
+                    </div>
+                </div>
+
+                {/* Capacity + appointments + emergency */}
+                <div className="grid gap-5 lg:grid-cols-3">
+                    <div className="rounded-2xl border border-white/[0.07] bg-[#09111f]/75 p-5">
+                        <SectionHeader
+                            icon={BedDouble}
+                            title="Bed capacity"
+                            subtitle="Current occupancy breakdown"
+                        />
+
+                        <div className="space-y-4">
+                            <div>
+                                <div className="mb-2 flex justify-between text-xs">
+                                    <span className="text-slate-400">
+                                        Occupancy
+                                    </span>
+                                    <span className="font-semibold text-cyan-300">
+                                        {data.capacity.occupancy}%
+                                    </span>
+                                </div>
+
+                                <div className="h-2 overflow-hidden rounded-full bg-white/[0.06]">
+                                    <div
+                                        className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 transition-all duration-700"
+                                        style={{
+                                            width: `${Math.min(
+                                                100,
+                                                data.capacity
+                                                    .occupancy
+                                            )}%`,
+                                        }}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-3">
+                                <MiniMetric
+                                    label="Occupied"
+                                    value={
+                                        data.capacity
+                                            .occupiedBeds
+                                    }
+                                />
+                                <MiniMetric
+                                    label="Available"
+                                    value={
+                                        data.capacity
+                                            .availableBeds
+                                    }
+                                />
+                                <MiniMetric
+                                    label="Reserved"
+                                    value={
+                                        data.capacity
+                                            .reservedBeds
+                                    }
+                                />
+                                <MiniMetric
+                                    label="Maintenance"
+                                    value={
+                                        data.capacity
+                                            .maintenanceBeds
+                                    }
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="rounded-2xl border border-white/[0.07] bg-[#09111f]/75 p-5">
+                        <SectionHeader
+                            icon={CalendarDays}
+                            title="Appointments"
+                            subtitle="Current appointment pipeline"
+                        />
+
+                        <div className="grid grid-cols-2 gap-3">
+                            <MiniMetric
+                                label="Today"
+                                value={
+                                    data.appointments.today
+                                }
+                            />
+                            <MiniMetric
+                                label="Scheduled"
+                                value={
+                                    data.appointments
+                                        .scheduled
+                                }
+                            />
+                            <MiniMetric
+                                label="Confirmed"
+                                value={
+                                    data.appointments
+                                        .confirmed
+                                }
+                            />
+                            <MiniMetric
+                                label="Completed"
+                                value={
+                                    data.appointments
+                                        .completed
+                                }
+                            />
+                        </div>
+
+                        <div className="mt-4 flex items-center justify-between rounded-xl border border-white/[0.06] bg-white/[0.02] p-3">
+                            <span className="text-xs text-slate-500">
+                                Completion rate
+                            </span>
+                            <span className="text-sm font-semibold text-emerald-300">
+                                {data.appointments.completion}%
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="rounded-2xl border border-white/[0.07] bg-[#09111f]/75 p-5">
+                        <SectionHeader
+                            icon={Siren}
+                            title="Emergency"
+                            subtitle="Current emergency pressure"
+                        />
+
+                        <div className="grid grid-cols-2 gap-3">
+                            <MiniMetric
+                                label="Active"
+                                value={
+                                    data.emergency.active
+                                }
+                            />
+                            <MiniMetric
+                                label="Today"
+                                value={
+                                    data.emergency.today
+                                }
+                            />
+                            <MiniMetric
+                                label="Critical"
+                                value={
+                                    data.emergency.critical
+                                }
+                            />
+                            <MiniMetric
+                                label="Urgent"
+                                value={
+                                    data.emergency.urgent
+                                }
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Alerts */}
+                <div className="rounded-2xl border border-white/[0.07] bg-[#09111f]/75 p-5">
+                    <SectionHeader
+                        icon={AlertTriangle}
+                        title="Operational alerts"
+                        subtitle="Generated only from actual backend thresholds"
+                    />
+
+                    {data.alerts.length === 0 ? (
+                        <div className="flex items-center gap-3 rounded-xl border border-emerald-400/10 bg-emerald-400/[0.03] p-4">
+                            <CheckCircle2
+                                size={19}
+                                className="text-emerald-400"
+                            />
+                            <div>
+                                <p className="text-sm font-semibold text-slate-200">
+                                    No active operational alerts
+                                </p>
+                                <p className="mt-1 text-xs text-slate-600">
+                                    Current backend thresholds are
+                                    within normal range.
+                                </p>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="grid gap-3 md:grid-cols-2">
+                            {data.alerts.map(
+                                (alert, index) => (
+                                    <div
+                                        key={`${alert.type}-${index}`}
+                                        className="rounded-xl border border-amber-400/10 bg-amber-400/[0.03] p-4"
+                                    >
+                                        <div className="flex items-start gap-3">
+                                            <AlertTriangle
+                                                size={18}
+                                                className="mt-0.5 text-amber-300"
+                                            />
+                                            <div>
+                                                <p className="text-sm font-semibold text-slate-200">
+                                                    {
+                                                        alert.title
+                                                    }
+                                                </p>
+                                                <p className="mt-1 text-xs leading-5 text-slate-500">
+                                                    {
+                                                        alert.message
+                                                    }
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            )}
+                        </div>
+                    )}
+                </div>
+
+                {/* Footer telemetry */}
+                <div className="flex flex-col justify-between gap-2 border-t border-white/[0.06] pt-4 text-[11px] text-slate-600 md:flex-row">
+                    <span>
+                        Live hospital intelligence • PostgreSQL
+                        backed
+                    </span>
+
+                    <span className="flex items-center gap-2">
+                        <Clock3 size={13} />
+                        Last backend snapshot:{" "}
+                        {data.generatedAt
+                            ? new Date(
+                                  data.generatedAt
+                              ).toLocaleTimeString(
+                                  "en-IN"
+                              )
+                            : "Unavailable"}
+                    </span>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+function MiniMetric({ label, value }) {
+    return (
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-600">
+                {label}
+            </p>
+            <p className="mt-2 text-lg font-bold text-slate-200">
+                {formatNumber(value)}
+            </p>
+        </div>
+    );
+}

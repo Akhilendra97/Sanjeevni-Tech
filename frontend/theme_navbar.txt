@@ -1,0 +1,71 @@
+import {
+  Bell,
+  Menu,
+  Search,
+  ShieldCheck,
+} from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
+
+export default function Navbar({ onMobileMenu }) {
+  const { user, role } = useAuth();
+
+  const name =
+    user?.full_name ||
+    user?.username ||
+    "Administrator";
+
+  return (
+    <header className="sticky top-0 z-30 flex h-[76px] items-center justify-between border-b border-white/[0.06] bg-[#030712]/90 px-4 backdrop-blur-xl sm:px-6 lg:px-8">
+      <div className="flex items-center gap-3">
+        <button
+          type="button"
+          onClick={onMobileMenu}
+          className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-2.5 text-slate-400 lg:hidden"
+        >
+          <Menu size={17} />
+        </button>
+
+        <div className="hidden items-center gap-2 rounded-xl border border-white/[0.06] bg-white/[0.025] px-3 py-2 md:flex">
+          <Search size={14} className="text-slate-700" />
+          <span className="text-[11px] text-slate-700">
+            Search hospital records...
+          </span>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-3">
+        <div className="hidden items-center gap-2 rounded-full border border-emerald-400/10 bg-emerald-400/[0.04] px-3 py-1.5 sm:flex">
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
+          <span className="text-[9px] font-bold uppercase tracking-wider text-emerald-400">
+            System online
+          </span>
+        </div>
+
+        <button
+          type="button"
+          className="relative rounded-xl border border-white/[0.07] bg-white/[0.025] p-2.5 text-slate-400"
+        >
+          <Bell size={16} />
+          <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-cyan-400" />
+        </button>
+
+        <div className="hidden h-6 w-px bg-white/[0.07] sm:block" />
+
+        <div className="hidden text-right sm:block">
+          <p className="max-w-[160px] truncate text-[11px] font-semibold text-slate-200">
+            {name}
+          </p>
+
+          <p className="mt-0.5 flex items-center justify-end gap-1 text-[8px] uppercase tracking-wider text-slate-600">
+            <ShieldCheck size={9} />
+            {role || "USER"}
+          </p>
+        </div>
+
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-400/20 to-indigo-500/20 text-sm font-bold text-cyan-300 ring-1 ring-white/[0.08]">
+          {String(name).charAt(0).toUpperCase()}
+        </div>
+      </div>
+    </header>
+  );
+}
